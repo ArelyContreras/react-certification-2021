@@ -1,9 +1,13 @@
 import React from 'react';
+import styled from 'styled-components';
 
-import './Layout.styles.css';
+export const MainContainer = styled.main`
+  width: 100vw;
+  position: relative;
+`;
 
 function Layout({ children }) {
-  return <main className="container">{children}</main>;
+  return <MainContainer>{children}</MainContainer>;
 }
 
 export default Layout;

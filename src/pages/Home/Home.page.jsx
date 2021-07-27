@@ -1,39 +1,54 @@
-import React, { useRef } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import React from 'react';
+import styled from 'styled-components';
 
-import { useAuth } from '../../providers/Auth';
-import './Home.styles.css';
+import videos from '../../mocks/youtube-videos-mock.json'
+import VideoCard from '../../components/VideoCard';
 
-function HomePage() {
-  const history = useHistory();
-  const sectionRef = useRef(null);
-  const { authenticated, logout } = useAuth();
-
-  function deAuthenticate(event) {
-    event.preventDefault();
-    logout();
-    history.push('/');
-  }
-
-  return (
-    <section className="homepage" ref={sectionRef}>
-      <h1>Hello stranger!</h1>
-      {authenticated ? (
-        <>
-          <h2>Good to have you back</h2>
-          <span>
-            <Link to="/" onClick={deAuthenticate}>
-              ← logout
-            </Link>
-            <span className="separator" />
-            <Link to="/secret">show me something cool →</Link>
-          </span>
-        </>
-      ) : (
-        <Link to="/login">let me in →</Link>
-      )}
-    </section>
-  );
-}
+export const Title = styled.h1`
+    font-size: 30px;
+    font-weight: 500;
+    line-height: 1.2;
+    letter-spacing: 1px;
+    color: black;
+    flex-basis: 100%;
+    max-width: 100%
+    text-align: center;
+    display: block;
+    margin: 0;
+    padding-top: 30px;
+    text-align: center;
+    text-transform: uppercase;
+    @media only screen and (min-width: 48em) {
+      font-size: 40px;
+    }
+`;
+export const HomeContent = styled.section`
+  max-width: 1135px;
+  margin: 0 auto;
+`;
+export const HomeContentSection = styled.div`
+  display: flex;
+  flex-flow: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: stretch;
+  padding: 20px;
+`;
+const HomePage = () => (
+  <HomeContent className="homepage">
+    <Title>Welcome to the Challenge!</Title>
+    <HomeContentSection>
+      {videos.items.map((video, key) => (
+        <VideoCard
+          key={key}
+          title={video.snippet.title}
+          videoId={video.id.videoId}
+          thumb={video.snippet.thumbnails.medium}
+          description={video.snippet.description}
+        />
+      ))}
+    </HomeContentSection>
+  </HomeContent>
+);
 
 export default HomePage;
