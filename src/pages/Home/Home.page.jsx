@@ -11,7 +11,7 @@ export const Title = styled.h1`
     letter-spacing: 1px;
     color: black;
     flex-basis: 100%;
-    max-width: 100%
+    max-width: 100%;
     text-align: center;
     display: block;
     margin: 0;
