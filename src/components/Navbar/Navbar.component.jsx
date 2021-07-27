@@ -77,9 +77,10 @@ const useStyles = makeStyles((theme: Theme) =>
 const Navbar = () => {
   const classes = useStyles();
   return (
-    <AppBar className={classes.navBar} position="sticky">
+    <AppBar data-testid="navbar-component" className={classes.navBar} position="sticky">
       <Toolbar>
         <IconButton
+          data-testid="navbar--hamburguer"
           edge="start"
           className={classes.menuButton}
           color="inherit"
@@ -87,7 +88,7 @@ const Navbar = () => {
         >
           <MenuIcon />
         </IconButton>
-        <div className={classes.search}>
+        <div data-testid="navbar--search" className={classes.search}>
           <div className={classes.searchIcon}>
             <SearchIcon />
           </div>
@@ -101,7 +102,7 @@ const Navbar = () => {
           />
         </div>
         <div className={classes.grow} />
-        <FormGroup>
+        <FormGroup data-testid="navbar--darkmode">
           <FormControlLabel
             control={
               <Switch
@@ -113,7 +114,7 @@ const Navbar = () => {
             label="Darkmode"
           />
         </FormGroup>
-        <div>
+        <div data-testid="navbar--login">
           <IconButton
             edge="end"
             aria-label="account of current user"

@@ -59,14 +59,14 @@ export const VideoCardInfoText = styled.p`
 const VideoCard = (props) => {
   const { title, thumb, description } = props;
   return (
-    <VideoCardItem>
+    <VideoCardItem data-testid="video-card-item">
       <VideoCardImgCont>
-        <VideoCardImg src={thumb.url} alt={title} title={title} />
+        <VideoCardImg data-testid="video-card-item--img" src={thumb.url} alt={title} title={title} />
       </VideoCardImgCont>
 
       <VideoCardInfo>
-        <VideoCardInfoTitle>{title}</VideoCardInfoTitle>
-        <VideoCardInfoText>{description}</VideoCardInfoText>
+        <VideoCardInfoTitle data-testid="video-card-item--title">{title}</VideoCardInfoTitle>
+        <VideoCardInfoText data-testid="video-card-item--descr">{description}</VideoCardInfoText>
       </VideoCardInfo>
     </VideoCardItem>
   );

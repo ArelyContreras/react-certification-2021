@@ -35,11 +35,12 @@ export const HomeContentSection = styled.div`
   padding: 20px;
 `;
 const HomePage = () => (
-  <HomeContent className="homepage">
-    <Title>Welcome to the Challenge!</Title>
+  <HomeContent data-testid="home-view" className="homepage">
+    <Title data-testid="page-name">Welcome to the Challenge!</Title>
     <HomeContentSection>
       {videos.items.map((video, key) => (
         <VideoCard
+          data-testid="video-card-item"
           key={key}
           title={video.snippet.title}
           videoId={video.id.videoId}
