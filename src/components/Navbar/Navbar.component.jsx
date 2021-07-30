@@ -1,6 +1,5 @@
 import React from "react";
 import {
-  alpha,
   makeStyles,
   Theme,
   createStyles
@@ -38,9 +37,9 @@ const useStyles = makeStyles((theme: Theme) =>
     search: {
       position: "relative",
       borderRadius: theme.shape.borderRadius,
-      backgroundColor: alpha(theme.palette.common.white, 0.15),
+      backgroundColor: "#f4f7f6",
       "&:hover": {
-        backgroundColor: alpha(theme.palette.common.white, 0.25)
+        backgroundColor: "#f4f7f6"
       },
       marginRight: theme.spacing(2),
       marginLeft: 0,

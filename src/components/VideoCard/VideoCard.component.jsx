@@ -61,7 +61,7 @@ const VideoCard = (props) => {
   return (
     <VideoCardItem data-testid="video-card-item">
       <VideoCardImgCont>
-        <VideoCardImg data-testid="video-card-item--img" src={thumb.url} alt={title} title={title} />
+        <VideoCardImg data-testid="video-card-item--img" src={thumb} alt={title} title={title} />
       </VideoCardImgCont>
 
       <VideoCardInfo>

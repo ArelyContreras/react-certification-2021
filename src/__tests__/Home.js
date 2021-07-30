@@ -3,7 +3,8 @@ import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
 import Home from '../pages/Home';
-import VideoCard from '../components/VideoCard';
+
+import videos from '../mocks/youtube-videos-mock.json';
 
 beforeEach(() => {
     render(<Home />);
@@ -12,18 +13,16 @@ beforeEach(() => {
 describe('<Home />', () => {
 
     test('Home works', () => {
-        const titleSection = screen.getByTestId('page-name');
+        const titleSection = screen.getByText('Welcome to the Challenge!');
 
-        expect(titleSection).toHaveTextContent('Welcome to the Challenge!');
-        expect(titleSection).not.toHaveTextContent('feed');
+        expect(titleSection).toBeInTheDocument();
     });
 
     test('Should load all cards', () => {
         const cardItems = screen.queryAllByTestId('video-card-item');
+        const originalVideosLength = videos.items.length;
 
-        for (let i = 0; i < cardItems.length; i++) {
-            expect(cardItems[i]).toBeInTheDocument();
-        }
+        expect(cardItems.length).toBe(originalVideosLength)
     });
 
     test('Should not be empty elements in cards', () => {
