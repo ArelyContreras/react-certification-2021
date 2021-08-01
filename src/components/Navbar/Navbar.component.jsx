@@ -73,10 +73,17 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const Navbar = () => {
+const Navbar = (props) => {
+  const {handleSearch} = props;
+  function updateSearch(e){
+    handleSearch(e.target.value.substring(0, 20));
+  }
+
   const classes = useStyles();
   return (
     <AppBar data-testid="navbar-component" className={classes.navBar} position="sticky">
+
+      <input type="text" onChange={updateSearch} />
       <Toolbar>
         <IconButton
           data-testid="navbar--hamburguer"
@@ -127,4 +134,5 @@ const Navbar = () => {
     </AppBar>
   );
 }
+
 export default Navbar;

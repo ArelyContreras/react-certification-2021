@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import videos from '../../mocks/youtube-videos-mock.json'
+// import videos from '../../mocks/youtube-videos-mock.json';
 import VideoCard from '../../components/VideoCard';
 
 export const Title = styled.h1`
@@ -34,22 +34,33 @@ export const HomeContentSection = styled.div`
   align-items: stretch;
   padding: 20px;
 `;
-const HomePage = () => (
-  <HomeContent data-testid="home-view" >
-    <Title data-testid="page-name">Welcome to the Challenge!</Title>
-    <HomeContentSection>
-      {videos.items.map((video, key) => (
-        <VideoCard
-          data-testid="video-card-item"
-          key={key}
-          title={video.snippet.title}
-          videoId={video.id.videoId}
-          thumb={video.snippet.thumbnails.medium.url}
-          description={video.snippet.description}
-        />
-      ))}
-    </HomeContentSection>
-  </HomeContent>
-);
+const HomePage = (props) => {
+  const {videos}= props;
+  return(
+    <HomeContent data-testid="home-view" >
+      <Title data-testid="page-name">Welcome to the Challenge!</Title>
+      {videos &&
+        <HomeContentSection>
+          {
+            videos.items
+              .filter(video => video.id.kind === 'youtube#video')
+              .map((video, key) => (
+                <VideoCard
+                  data-testid="video-card-item"
+                  key={key}
+                  title={video.snippet.title}
+                  videoId={video.id.videoId}
+                  thumb={video.snippet.thumbnails.medium.url}
+                  description={video.snippet.description}
+                  channel={video.snippet.channelTitle}
+                  publishedDate={video.snippet.publishedAt}
+                />
+              ))
+          }
+        </HomeContentSection>
+      }
+    </HomeContent>
+  )
+};
 
 export default HomePage;
