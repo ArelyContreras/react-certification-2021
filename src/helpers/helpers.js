@@ -11,7 +11,7 @@ export const buildQueryParams = (data) => {
         .map(([key, value]) => {
             let finalValue = value;
             if(Array.isArray(value)){
-                let finalValue = value.join(',');
+                finalValue = value.join(',');
             }
             return `${key}=${encodeURI(finalValue)}`;
         })
