@@ -33,7 +33,7 @@ import styled from 'styled-components';
     `;
 // NAVBAR -------------------------------------------------------
 
-  export const AppBar = styled.header`
+  export const AppBar = styled.nav`
     width: 100vw;
     position: fixed;
     height 60px;

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import 'gapi-script';
 
 import HomePage from '../../pages/Home';
 import Layout from '../Layout';
@@ -26,7 +25,7 @@ function App() {
   }, [search], 300)
 
   return (
-    <div data-testid="app-component">
+    <div>
       <BrowserRouter style={{ overflow: 'hidden' }}>
         <Layout>
           <Navbar handleSearch={handleSearch}/>

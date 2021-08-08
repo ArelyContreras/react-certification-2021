@@ -29,16 +29,15 @@ const HomePage = (props) => {
   const {videos}= props;
   // console.log(videos)
   return(
-    <ContainerFluidMain data-testid="home-view" theme={{ section: 'home' }}>
-      <Title data-testid="page-name">Welcome to the Challenge!</Title>
+    <ContainerFluidMain theme={{ section: 'home' }}>
+      <Title>Welcome to the Challenge!</Title>
       {videos &&
-        <ContentSection>
+        <ContentSection role="row">
           {
             videos
               .filter(video => video.id.kind === 'youtube#video')
               .map((video, key) => (
                 <VideoCard
-                  data-testid="video-card-item"
                   key={key}
                   title={video.snippet.title}
                   videoId={video.id.videoId}
@@ -46,8 +45,6 @@ const HomePage = (props) => {
                   description={video.snippet.description}
                   channel={video.snippet.channelTitle}
                   publishedDate={video.snippet.publishedAt}
-                  // handleVideoSelect={handleVideoSelect}
-                  // onClick={handleClick(video.id.videoId)}
                 />
               ))
           }

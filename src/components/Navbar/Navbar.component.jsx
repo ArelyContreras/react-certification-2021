@@ -26,17 +26,17 @@ const Navbar = (props) => {
 	}
 
 	return (
-		<AppBar >
+		<AppBar aria-label="Header">
 			<AppBarContainer>
 				<ThemeProvider theme={{ float: 'left' }}>
 					<AppBarContainerInside>
-						<MenuButton>
+						<MenuButton aria-label='Hamburguer'>
 							<Icon>menu</Icon>
 						</MenuButton>
 						<SearchContainer>
 							<SearchBox>
 								<Icon className="menu-search--icon">search</Icon>
-								<SearchInput type="text" onKeyDown={updateSearch} />
+								<SearchInput aria-label="Search" type="text" onKeyDown={updateSearch} />
 							</SearchBox>
 						</SearchContainer>
 					</AppBarContainerInside>
@@ -45,11 +45,11 @@ const Navbar = (props) => {
 					<AppBarContainerInside>
 						<DarkModeButtonContainer>
 							<DarkModeSwitch>
-								<DarkModeInput type="checkbox" />
+								<DarkModeInput aria-label="Darkmode" type="checkbox" />
 								<DarkModeSlider></DarkModeSlider>
 							</DarkModeSwitch>
 						</DarkModeButtonContainer>
-						<LoginButton>
+						<LoginButton aria-label="Login">
 							<Icon>person</Icon>
 						</LoginButton>
 					</AppBarContainerInside>
