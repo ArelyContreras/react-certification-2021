@@ -1,6 +1,10 @@
-import styled from 'styled-components';
+import styled  from 'styled-components';
 
 // CONTAINERS ----------------------------------------------------------
+export const MainContainer = styled.main`
+  width: 100vw;
+  position: relative;
+`;
   export const ContainerFluidMain = styled.section`
     max-width: 1135px;
     margin: 0 auto;
@@ -37,10 +41,7 @@ import styled from 'styled-components';
     width: 100vw;
     position: fixed;
     height 60px;
-    background-color: #f4f7f6;
-    border-bottom: 1px solid #E6EAEA;
-    color: #202121;
-
+    box-shadow: 0 1px 6px 0 rgba(0,0,0,.20);
   `;
   export const AppBarContainer = styled.div`
     width: calc(100% - 20px);
@@ -85,6 +86,13 @@ import styled from 'styled-components';
     font-weight: 400;
     width: calc(100% - 50px);
   `;
+
+
+
+
+
+
+
   export const DarkModeButtonContainer = styled.div`
     flex-basis: calc(100% - 60px);
     max-width: calc(100% - 60px);
@@ -96,11 +104,6 @@ import styled from 'styled-components';
     width: 60px;
     height: 35px;
   `;
-  export const DarkModeInput = styled.input`
-    opacity: 0;
-    width: 0;
-    height: 0;
-  `;
   export const DarkModeSlider = styled.span`
     position: absolute;
     cursor: pointer;
@@ -109,7 +112,6 @@ import styled from 'styled-components';
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: #ccc;
     transition: .4s;
     &:before {
       position: absolute;
@@ -123,16 +125,128 @@ import styled from 'styled-components';
       border-radius: 50%;
     }
   `;
+  export const DarkModeInput = styled.input`
+    opacity: 0;
+    width: 0;
+    height: 0;
+    &:checked + ${DarkModeSlider}:before {
+      transform: translateX(26px);
+    }
+  `;
+
+
+
+
+
+
+
+
+
+
+
+
   export const LoginButton = styled.button`
     flex-basis: 40px;
     max-width: 40px;
     height: 40px;
     border: 0;
-    background-color: #bdbdbd;
     cursor: pointer;
     border-radius: 100%;
     color: white;
   `;
+  export const LoginDropdown= styled.div`
+    position: absolute;
+    background: white;
+    top: 15px;
+    right: 15px;
+    display: flex;
+    flex-flow: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    border-radius: 4px;
+    box-shadow: 0px 5px 14px 0px rgb(68, 68, 68,.48);
+  `;
+  export const LoginModal = styled.div`
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    left: 0;
+    top: 0;
+    background-color: rgba(0,0,0,.5);
+    display: flex;
+    flex-flow: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+  `;
+  export const LoginModalContainer = styled(ContentSection)`
+    background-color: white;
+    border-radius: 8px;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    max-width: 90%;
+    @media only screen and (min-width: 48em) {
+      max-width: 500px;
+    }
+  `;
+  export const LoginInput = styled.input`
+    width: 90%;
+    height 40px;
+    line-height: 40px;
+    border-bottom: 1px solid gray;
+    margin-bottom: 10px;
+  `;
+  export const LoginLabel = styled.label`
+    width: 90%;
+    height 16px;
+    line-height: 16px;
+    color: #444444;
+    font-size: 14px;
+  `;
+  export const CloseButton = styled.button`
+    color: white;
+    background: transparent;
+    border: none;
+    font-size: 30px;
+    line-height: 25px;
+    display:block;
+    position: absolute;
+    right: 0;
+    top: -40px;
+    z-index: 1;
+    cursor: pointer;
+    @media only screen and (min-width: 48em) {
+      right: -30px;
+      top: -30px;
+    }
+  `;
+  export const GeneralButton = styled.button`
+    height: 40px;
+    line-heigth: 40px;
+    background-color: white;
+    border: 1px solid #444444;
+    color: #444444;
+    display: block;
+    min-width: 100px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 5px;
+    @media only screen and (min-width: 48em) {
+      min-width: 150px;
+    }
+  `;
+  export const FlexContainer = styled.div`
+    display: flex;
+    flex-flow: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+  `;
+
+
 
 // VIDEO CARD -------------------------------------------------------------------
 
@@ -288,7 +402,6 @@ export const VideoInfoContainer = styled.div`
     }
 `;
 export const VideoInfoContainerTitle = styled.h1`
-    color: black;
     font-weight: 500;
     font-size: 16px;
     flex-basis: 100%;
@@ -338,3 +451,21 @@ export const VideoInfoContainerSave = styled.a`
 	padding: 0px 10px;
 `;
 
+
+export const Title = styled.h1`
+    font-size: 30px;
+    font-weight: 500;
+    line-height: 1.2;
+    letter-spacing: 1px;
+    flex-basis: 100%;
+    max-width: 100%;
+    text-align: center;
+    display: block;
+    margin: 0;
+    padding-top: 30px;
+    text-align: center;
+    text-transform: uppercase;
+    @media only screen and (min-width: 48em) {
+      font-size: 40px;
+    }
+`;

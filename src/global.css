@@ -8,8 +8,8 @@ html {
   font-family: 'Roboto', sans-serif;
   box-sizing: border-box;
   scroll-behavior: smooth;
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-  background-color: #f4f7f6;
+  /* -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  background-color: #f4f7f6; */
 }
 
 *,
@@ -70,4 +70,20 @@ input:focus{
 /* .menu-search--icon{
   line-height: 30px;
   height: 35px !important
+} */
+
+/*In src/App.css*/
+/* [data-theme="light"]{
+  --text-color: black;
+  --background-color: white;
+}
+
+[data-theme="dark"]{
+  --text-color: #fcfcfc;
+  --background-color: #1d1c1c;
+}
+
+.App nav{
+  color: var(--text-color);
+  background-color: var(--background-color);
 } */

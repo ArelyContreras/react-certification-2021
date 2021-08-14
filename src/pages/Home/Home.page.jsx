@@ -1,29 +1,12 @@
 import React from 'react';
-import styled from 'styled-components';
 import VideoCard from '../../components/VideoCard';
 
 import {
   ContainerFluidMain,
-  ContentSection } from '../../components/StyledComponents/StyledComponents.component';
+  ContentSection,
+  Title } from '../../components/StyledComponents/StyledComponents.component';
 
-export const Title = styled.h1`
-    font-size: 30px;
-    font-weight: 500;
-    line-height: 1.2;
-    letter-spacing: 1px;
-    color: black;
-    flex-basis: 100%;
-    max-width: 100%;
-    text-align: center;
-    display: block;
-    margin: 0;
-    padding-top: 30px;
-    text-align: center;
-    text-transform: uppercase;
-    @media only screen and (min-width: 48em) {
-      font-size: 40px;
-    }
-`;
+
 
 const HomePage = (props) => {
   const {videos}= props;

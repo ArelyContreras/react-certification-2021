@@ -1,10 +1,6 @@
 import React from 'react';
-import styled from 'styled-components';
+import { MainContainer } from '../../components/StyledComponents/StyledComponents.component';
 
-export const MainContainer = styled.main`
-  width: 100vw;
-  position: relative;
-`;
 
 function Layout({ children }) {
   return <MainContainer>{children}</MainContainer>;
