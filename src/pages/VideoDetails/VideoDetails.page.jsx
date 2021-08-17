@@ -1,33 +1,34 @@
-import React from 'react';
-import { useParams } from "react-router-dom";
-import {
-	ContainerFluidMain,
-	ContentSection,
-	VideoDetailRelatedList } from '../../components/StyledComponents/StyledComponents.component';
-
+import React, {useContext} from 'react';
+import { AppContext } from "../../providers/AppProvider";
+import useDebounce from '../../hooks/useDebounce';
 import VideoReproductor from '../../components/VideoReproductor';
 import VideoCardList from '../../components/VideoCardList';
 
-import useGapi from '../../hooks/useGapi';
-import useDebounce from '../../hooks/useDebounce';
+import {
+	ContainerFluidMain,
+	ContentSectionReproductor,
+	VideoDetailRelatedList } from '../../components/StyledComponents/StyledComponents.component';
 
-
-const VideoDetailsPage = (props) => {
-  	const { videoDetails, relatedVideos, fetchVideoDetails, fetchRelatedVideos } = useGapi();
-    const params = useParams();
-    const videoId = params.videoId;
+const VideoDetailsPage = ({match}) => {
+    const { videoId, setVideoId, videoDetails, relatedVideos } = useContext(AppContext);
+    const getVideoId = () => {
+        setVideoId(match.params.videoId)
+    }
 
     useDebounce(() => {
-		fetchVideoDetails({type: 'videos', details: 'contentDetails, player, snippet', id: videoId});
-		fetchRelatedVideos({type: 'search', details: 'snippet', id: videoId, maxResults: '8'});
-    }, [videoId], 300)
-
+        if (document.readyState === "complete") {
+            getVideoId();
+        } else {
+            window.addEventListener('load', getVideoId);
+            return () => document.removeEventListener('load', getVideoId);
+        }
+      }, [videoId], 300)
 
     return(
-        <ContainerFluidMain>
+        <ContainerFluidMain >
 
-                <ContentSection>
-                {videoDetails &&
+                <ContentSectionReproductor>
+                {videoDetails !== null &&
                     <VideoReproductor
                         title={videoDetails.snippet.title}
                         videoId={videoDetails.id}
@@ -46,7 +47,7 @@ const VideoDetailsPage = (props) => {
                                     <VideoCardList
                                     key={video.id.videoId}
                                     title={video.snippet.title}
-                                    videoId={video.id.videoId}
+                                    idVid={video.id.videoId}
                                     thumb={video.snippet.thumbnails.default.url}
                                     channel={video.snippet.channelTitle}
                                     />
@@ -55,7 +56,7 @@ const VideoDetailsPage = (props) => {
                         </VideoDetailRelatedList>
                     }
 
-                </ContentSection>
+                </ContentSectionReproductor>
 
         </ContainerFluidMain>
 

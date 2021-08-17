@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {useContext} from 'react';
+import { AppContext } from "../../providers/AppProvider";
 import VideoCard from '../../components/VideoCard';
 
 import {
@@ -6,11 +7,9 @@ import {
   ContentSection,
   Title } from '../../components/StyledComponents/StyledComponents.component';
 
-
-
 const HomePage = (props) => {
-  const {videos}= props;
-  // console.log(videos)
+  const {videos} = useContext(AppContext);
+
   return(
     <ContainerFluidMain theme={{ section: 'home' }}>
       <Title>Welcome to the Challenge!</Title>

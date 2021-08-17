@@ -1,15 +1,14 @@
 import React from 'react';
 import { useHistory } from "react-router-dom";
 import {
-  VideoCardItem,
-  VideoCardItemButton,
-  VideoCardImgCont,
-  VideoCardImg,
-  VideoCardInfo,
-  VideoCardInfoTitle,
-  VideoCardInfoText,
-  VideoCardinfoDate,
-  VideoCardChannel} from '../../components/StyledComponents/StyledComponents.component';
+  CardItem,
+  CardContainer,
+  CardImgContainer,
+  ImageGeneral,
+  CardInfo,
+  Subtitle,
+  CardDate,
+  CardBy} from '../../components/StyledComponents/StyledComponents.component';
 
 
 const VideoCard = (props) => {
@@ -22,19 +21,19 @@ const VideoCard = (props) => {
 	}
 
   return (
-    <VideoCardItem role="gridcell">
-      <VideoCardItemButton onClick={((e) => selectVideo(e, videoId))}>
-        <VideoCardImgCont>
-          <VideoCardImg data-testid="video-card-item--img" src={thumb} alt={title} title={title} />
-        </VideoCardImgCont>
-        <VideoCardInfo>
-          <VideoCardInfoTitle data-testid="video-card-item--title">{title}</VideoCardInfoTitle>
-          <VideoCardinfoDate>{publishedDate.slice(0, 10)}</VideoCardinfoDate>
-          <VideoCardInfoText data-testid="video-card-item--descr">{description}</VideoCardInfoText>
-          <VideoCardChannel>BY <strong>{channel}</strong></VideoCardChannel>
-        </VideoCardInfo>
-      </VideoCardItemButton>
-    </VideoCardItem>
+    <CardItem className="card" role="gridcell">
+      <CardContainer onClick={((e) => selectVideo(e, videoId))}>
+        <CardImgContainer>
+          <ImageGeneral data-testid="video-card-item--img" src={thumb} alt={title} title={title} />
+        </CardImgContainer>
+        <CardInfo>
+          <Subtitle data-testid="video-card-item--title">{title}</Subtitle>
+          <CardDate>{publishedDate.slice(0, 10)}</CardDate>
+          <p data-testid="video-card-item--descr">{description}</p>
+          <CardBy>BY <strong>{channel}</strong></CardBy>
+        </CardInfo>
+      </CardContainer>
+    </CardItem>
   );
 };
 export default VideoCard;

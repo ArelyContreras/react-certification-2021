@@ -1,14 +1,15 @@
-import React, { useState , useRef, useContext } from "react";
+import React, { useRef, useContext } from "react";
 import Icon from '@material-ui/core/Icon';
 import { ThemeProvider } from 'styled-components';
 import useForm from "../../hooks/form";
+import { useHistory, useLocation } from "react-router-dom";
 import useOnClickOutside from "../../hooks/useOnClickOutside";
 import { AppContext } from "../../providers/AppProvider";
 
 import {AppBar,
 	AppBarContainer,
 	AppBarContainerInside,
-	MenuButton,
+	HamburguerButton,
 	SearchContainer,
 	SearchBox,
 	SearchInput,
@@ -16,51 +17,52 @@ import {AppBar,
 	DarkModeSwitch,
 	DarkModeInput,
 	DarkModeSlider,
-	LoginButton,
-	LoginModal,
-	LoginModalContainer,
-	LoginInput,
-	LoginLabel,
-	GeneralButton,
+	LoginCircleButton,
+	Modal,
+	ModalContent,
+	ModalInput,
+	ModalLabel,
+	BlackBorderButton,
 	CloseButton,
-	LoginDropdown,
-	FlexContainer} from '../../components/StyledComponents/StyledComponents.component';
+	MenuDropdown,
+	FlexContainer,
+	ErrorMessageContainer,
+	ErrorMessage} from '../../components/StyledComponents/StyledComponents.component';
 
 
 const Navbar = (props) => {
 	const ref = useRef();
-	const {sessionUser, setUser, unsetUser} = props;
+    const history = useHistory();
+    const location = useLocation();
 	const [formValues, setFormValues] = useForm({ username: '', password: ''});
-	const [openModal, setOpenModal] = useState(false);
-	const [openDropdown, setOpenDropdown] = useState(false);
+	const { toggleTheme, handleSearch,
+			openModal, setOpenModal,
+			openDropdown, setOpenDropdown,
+			sessionUser, setUser, unsetUser, errorMessage } = useContext(AppContext);
 
-	const { toggleTheme, handleSearch } = useContext(AppContext);
+
 	const handleThemeToggle = (e) => {
 		toggleTheme();
 	};
-
-
-	// const { state, dispatch, handleSearch } = useContext(AppContext);
-	// const theme = state.theme;
-	// const handleThemeToggle = (e) => {
-	// 	if (theme == 'light'){
-	// 		dispatch({ type: "DARK" });
-	// 	}
-    // 	else{
-    //   		dispatch({ type: "LIGHT" });
-	// 	}
-	// };
-
+	const handleSetUser = () => {
+		setUser(formValues.username, formValues.password);
+	}
 	function updateSearch(e){
 		if(e.key === 'Enter'){
-		handleSearch(e.target.value.substring(0, 20));
+			handleSearch(e.target.value.substring(0, 20));
+			if(location.pathname !== '/'){
+				history.push(`/`);
+			}
+			console.log(location.pathname !== '/')
 		}
 	}
 	function toggleModal(){
+		console.log('modal')
 		setOpenModal(!openModal);
 	}
 	function toggleDropdown(){
-		setOpenDropdown(!openModal);
+		console.log('dropdown')
+		setOpenDropdown(!openDropdown);
 	}
 
 	useOnClickOutside(ref, () => setOpenDropdown(false));
@@ -68,8 +70,8 @@ const Navbar = (props) => {
 	let loginDropdown;
 	let logoutDropdown;
 	if (openDropdown) {
-		loginDropdown = <LoginDropdown><GeneralButton onClick={toggleModal}>Iniciar Sesion</GeneralButton></LoginDropdown>;
-		logoutDropdown = <LoginDropdown ><GeneralButton onClick={unsetUser}>Cerrar Sesion</GeneralButton></LoginDropdown>;
+		loginDropdown = <MenuDropdown><BlackBorderButton className="blackBorder" onClick={toggleModal}>Iniciar Sesion</BlackBorderButton></MenuDropdown>;
+		logoutDropdown = <MenuDropdown ><BlackBorderButton className="blackBorder" onClick={unsetUser}>Cerrar Sesion</BlackBorderButton></MenuDropdown>;
 	}
 
 	return (
@@ -77,9 +79,9 @@ const Navbar = (props) => {
 			<AppBarContainer>
 				<ThemeProvider theme={{ float: 'left' }}>
 					<AppBarContainerInside>
-						<MenuButton className="hamburguerMenu" aria-label='Hamburguer'>
+						<HamburguerButton className="hamburguerMenu" aria-label='Hamburguer'>
 							<Icon>menu</Icon>
-						</MenuButton>
+						</HamburguerButton>
 						<SearchContainer className="searchBar">
 							<SearchBox>
 								<Icon className="menu-search--icon">search</Icon>
@@ -93,32 +95,44 @@ const Navbar = (props) => {
 						<DarkModeButtonContainer className="switchDarkMode">
 							<DarkModeSwitch>
 								<DarkModeInput onClick={handleThemeToggle} aria-label="Darkmode" type="checkbox" />
-								{/* <DarkModeInput  aria-label="Darkmode" type="checkbox" /> */}
 								<DarkModeSlider></DarkModeSlider>
 							</DarkModeSwitch>
 						</DarkModeButtonContainer>
-						<LoginButton className="userLogin" ref={ref} aria-label="Login" onClick={toggleDropdown}>
-							<Icon>person</Icon>
-						</LoginButton>
+						{(sessionUser) ?
+							<LoginCircleButton theme={{
+								background: sessionUser.image,
+								repeat: 'no-repeat',
+								position: 'center',
+								size: 'cover' }} className="userLogin" ref={ref} aria-label="LoggedIn" onClick={toggleDropdown}></LoginCircleButton>
+							:
+							<LoginCircleButton className="userLogin" ref={ref} aria-label="Login" onClick={toggleDropdown}>
+								<Icon>person</Icon>
+							</LoginCircleButton>
+						}
+
 						{(sessionUser) ?
 							logoutDropdown
 							:
 							loginDropdown
 						}
 						{openModal ?
-							<LoginModal>
-								<LoginModalContainer>
+							<Modal>
+								<ModalContent>
 									<CloseButton onClick={toggleModal}>X</CloseButton>
-									<LoginLabel htmlFor="username">Username</LoginLabel>
-									<LoginInput type="text" name="username" onChange={setFormValues}/>
-									<LoginLabel htmlFor="password">Password</LoginLabel>
-									<LoginInput type="text" name="password" onChange={setFormValues}/>
+									<ModalLabel htmlFor="username">Username</ModalLabel>
+									<ModalInput type="text" name="username" onChange={setFormValues}/>
+									<ModalLabel htmlFor="password">Password</ModalLabel>
+									<ModalInput type="text" name="password" onChange={setFormValues}/>
+									{errorMessage ?
+										<ErrorMessageContainer><ErrorMessage>{errorMessage}</ErrorMessage></ErrorMessageContainer>
+										: null
+									}
 									<FlexContainer>
-										<GeneralButton onClick={toggleModal}>Cancel</GeneralButton>
-										<GeneralButton onClick={() => setUser(formValues.username, formValues.password)}>Login</GeneralButton>
+										<BlackBorderButton className="blackBorder" onClick={toggleModal}>Cancel</BlackBorderButton>
+										<BlackBorderButton className="blackBorder" onClick={handleSetUser}>Login</BlackBorderButton>
 									</FlexContainer>
-								</LoginModalContainer>
-							</LoginModal>
+								</ModalContent>
+							</Modal>
 							: ''
 						}
 					</AppBarContainerInside>

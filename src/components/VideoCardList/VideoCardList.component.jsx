@@ -1,38 +1,39 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import { useHistory } from "react-router-dom";
-
+import { AppContext } from "../../providers/AppProvider";
 import {
-  VideoListedItem,
-  VideoListedItemButton,
-  VideoListedImgCont,
-  VideoCardImg,
-  VideoListedCardInfo,
-  VideoListedCardInfoTitle,
-  VideoCardChannel} from '../StyledComponents/StyledComponents.component';
+  CardItemListed,
+  CardContainerTopCenter,
+  CardImgContainerListed,
+  ImageGeneral,
+  CardInfoListed,
+  SmallerSubtitle,
+  CardBySmall} from '../StyledComponents/StyledComponents.component';
 
 
 const VideoCardList = (props) => {
-    const { title, videoId, thumb, channel } = props;
+    const { title, idVid, thumb, channel } = props;
+    const { setVideoId } = useContext(AppContext);
     const history = useHistory();
-
 
     function selectVideo(e, data){
       e.preventDefault();
-      history.push(`/details/${data}`);
+      setVideoId(data);
+        history.push(`/details/${data}`);
     }
 
     return (
-      <VideoListedItem>
-        <VideoListedItemButton onClick={((e) => selectVideo(e, videoId))}>
-          <VideoListedImgCont>
-            <VideoCardImg  src={thumb} alt={title} title={title} />
-          </VideoListedImgCont>
-          <VideoListedCardInfo>
-            <VideoListedCardInfoTitle>{title}</VideoListedCardInfoTitle>
-            <VideoCardChannel>BY <strong>{channel}</strong></VideoCardChannel>
-          </VideoListedCardInfo>
-        </VideoListedItemButton>
-      </VideoListedItem>
+      <CardItemListed className="card">
+        <CardContainerTopCenter onClick={((e) => selectVideo(e, idVid))}>
+          <CardImgContainerListed>
+            <ImageGeneral  src={thumb} alt={title} title={title} />
+          </CardImgContainerListed>
+          <CardInfoListed>
+            <SmallerSubtitle>{title}</SmallerSubtitle>
+            <CardBySmall>{channel}</CardBySmall>
+          </CardInfoListed>
+        </CardContainerTopCenter>
+      </CardItemListed>
     );
   };
   export default VideoCardList;

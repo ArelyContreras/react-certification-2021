@@ -7,41 +7,64 @@ export default createGlobalStyle`
                 #root {
                     background: ${theme.general.background};
                     color: ${theme.general.text};
-                    height: 100vh;
                 }
                 h1{
                     color: ${theme.general.text};
+                    .TitleBorder{
+                        border-bottom: ${theme.general.borderTitle};
+                    }
+                }
+                button{
+                    &.blackBorder{
+                        background-color: ${theme.buttons.blackborder.background};
+                        border: ${theme.buttons.blackborder.border};
+                        color: ${theme.buttons.blackborder.color};
+                    }
                 }
                 nav{
                     background-color: ${theme.nav.background};
                     border-bottom: 1px solid #E6EAEA;
                     color: ${theme.nav.text};
+                    .hamburguerMenu{
+                        color: ${theme.nav.text};
+                    }
+                    .searchBar input{
+                        color: ${theme.nav.text};
+                    }
+                    .switchDarkMode label span{
+                        background-color: ${theme.nav.switch.switch};
+                    }
+                    .switchDarkMode label span:before{
+                        background-color: ${theme.nav.switch.slide};
+                    }
+                    .switchDarkMode label input:checked + span{
+                        background-color: ${theme.nav.switch.switch};
+                    }
+                    .switchDarkMode label input:focus + span{
+                        background-color: ${theme.nav.switch.switch};
+                    }
+                    .userLogin{
+                        background-color: ${theme.nav.loginIcon.background};
+                    }
+                    .userLogin span{
+                        color: ${theme.nav.loginIcon.icon};
+                    }
                 }
-                nav .hamburguerMenu{
-                    color: ${theme.nav.text};
+                .card{
+                    h2, span, a{
+                        color: ${theme.general.text};
+                    }
+                    p {
+                        color: ${theme.cards.textGray};
+                    }
                 }
-                nav .searchBar input{
-                    color: ${theme.nav.text};
+                .reproductor{
+                    button{
+                        &.link{
+                            color : ${theme.general.text};
+                        }
+                    }
                 }
-                nav .switchDarkMode label span{
-                    background-color: ${theme.nav.switch.switch};
-                }
-                nav .switchDarkMode label span:before{
-                    background-color: ${theme.nav.switch.slide};
-                }
-                nav .switchDarkMode label input:checked + span{
-                    background-color: ${theme.nav.switch.switch};
-                }
-                nav .switchDarkMode label input:focus + span{
-                    background-color: ${theme.nav.switch.switch};
-                }
-                nav .userLogin{
-                    background: ${theme.nav.loginIcon.background};
-                }
-                nav .userLogin span{
-                    color: ${theme.nav.loginIcon.icon};
-                }
-
             }
         }
     `}

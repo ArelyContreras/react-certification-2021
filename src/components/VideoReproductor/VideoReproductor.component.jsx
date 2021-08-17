@@ -1,21 +1,28 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import {
     VideoReproductorContainer,
     VideoIframeContainer,
     VideoInfoContainer,
-    VideoInfoContainerTitle,
-    VideoInfoContainerDescr,
+    TitleIntern,
+    CardDate,
+    CardDescriptionBig,
     VideoInfoContainerInside,
-    VideoInfoContainerChannel,
-    VideoInfoContainerSave} from '../StyledComponents/StyledComponents.component';
+    CardInfoSubtitle,
+    BlackBorderButtonAbsolute,
+    ButtonAsLink} from '../StyledComponents/StyledComponents.component';
 
 const VideoReproductor = (props) => {
-    const { videoId, title, description, channel} = props;
+    const { videoId, title, description, channel, publishedDate} = props;
+    const [ showText, setShowText ] = useState(false);
+    const handleShowText = () => {
+        setShowText(!showText)
+    }
     return(
-        <VideoReproductorContainer>
+        <VideoReproductorContainer className="reproductor">
             <VideoIframeContainer>
                 <iframe
+                    className="ytPlayer"
                     width="100%"
                     height="100%"
                     src={`https://www.youtube.com/embed/${videoId}`}
@@ -26,12 +33,14 @@ const VideoReproductor = (props) => {
                 />
             </VideoIframeContainer>
             <VideoInfoContainer>
-                <VideoInfoContainerTitle>{title}</VideoInfoContainerTitle>
+                <TitleIntern className="TitleBorder">{title}</TitleIntern>
+                <CardDate>{publishedDate.slice(0, 10)}</CardDate>
                 <VideoInfoContainerInside>
-                    <VideoInfoContainerChannel>{channel}</VideoInfoContainerChannel>
-                    <VideoInfoContainerSave>Guardar</VideoInfoContainerSave>
+                    <CardInfoSubtitle>{channel}</CardInfoSubtitle>
+                    <BlackBorderButtonAbsolute className="blackBorder">Guardar</BlackBorderButtonAbsolute>
                 </VideoInfoContainerInside>
-                <VideoInfoContainerDescr>{description}</VideoInfoContainerDescr>
+                <CardDescriptionBig theme={{ show: showText }}>{description}</CardDescriptionBig>
+                <ButtonAsLink className="link" onClick={handleShowText}>Mostrar {(showText ? 'menos':'más')}</ButtonAsLink>
             </VideoInfoContainer>
         </VideoReproductorContainer>
     );

@@ -1,10 +1,10 @@
 import styled  from 'styled-components';
 
 // CONTAINERS ----------------------------------------------------------
-export const MainContainer = styled.main`
-  width: 100vw;
-  position: relative;
-`;
+  export const MainContainer = styled.main`
+    width: 100vw;
+    position: relative;
+  `;
   export const ContainerFluidMain = styled.section`
     max-width: 1135px;
     margin: 0 auto;
@@ -18,7 +18,17 @@ export const MainContainer = styled.main`
     align-items: stretch;
     padding: 20px;
   `;
-  // Video List Detils
+  export const ContentSectionReproductor = styled(ContentSection)`
+    align-items: flex-start;
+  `;
+  export const FlexContainer = styled.div`
+    display: flex;
+    flex-flow: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+  `;
+  // video List Detils
     export const VideoDetailRelatedList = styled.div`
       flex-basis: 100%;
       max-width: 100%;
@@ -35,8 +45,190 @@ export const MainContainer = styled.main`
         max-width: calc(30% - 10px);
       }
     `;
-// NAVBAR -------------------------------------------------------
+// BUTTONS----------------------------------------------------------------------------------
+  export const BlackBorderButton = styled.button`
+    height: 40px;
+    line-height: 40px;
 
+    min-width: 100px;
+    margin: 5px;
+    @media only screen and (min-width: 48em) {
+      min-width: 150px;
+    }
+  `;
+  export const BlackBorderButtonAbsolute = styled(BlackBorderButton)`
+    min-width: 100px;
+    text-transform uppercase;
+  `;
+  export const HamburguerButton = styled.button`
+    flex-basis 50px;
+    max-width: 50px;
+    line-height: 60px;
+  `;
+  export const LoginCircleButton = styled.button`
+    width: 40px;
+    flex-basis: 40px;
+    max-width: 40px;
+    height: 40px;
+    cursor: pointer;
+    border-radius: 100%;
+    color: white;
+    background-image: url(${props => props.theme.background});
+    background-repeat: ${props => props.theme.repeat};
+    background-position: ${props => props.theme.position};
+    background-size: ${props => props.theme.size};
+  `;
+  export const CloseButton = styled.button`
+    color: white;
+    font-size: 30px;
+    line-height: 25px;
+    position: absolute;
+    right: 0;
+    top: -40px;
+    z-index: 1;
+    @media only screen and (min-width: 48em) {
+      right: -30px;
+      top: -30px;
+    }
+  `;
+  export const CardContainer = styled.button`
+    display: flex;
+    flex-flow: row;
+    flex-wrap: wrap;
+    justify-content: stretch;
+    align-items: stretch;
+    width: 100%
+  `;
+  export const CardContainerTopCenter = styled(CardContainer)`
+    justify-content: center;
+    align-items: flex-start;
+  `;
+  export const ButtonAsLink = styled.button`
+    text-decoration: none;
+    font-weight: bold;
+    cursor: pointer;
+    font-size:14px;
+    padding: 10px 0;
+    text-transform: uppercase;
+  `;
+// TEXTS ------------------------------------------------------------------------
+  export const Title = styled.h1`
+      font-size: 30px;
+      line-height: 1.2;
+      flex-basis: 100%;
+      max-width: 100%;
+      padding-top: 30px;
+      @media only screen and (min-width: 48em) {
+        font-size: 40px;
+      }
+  `;
+  export const TitleIntern = styled.h1`
+    text-align: left;
+    font-size: 16px;
+    flex-basis: 100%;
+    max-width: 100%;
+  `;
+  export const Subtitle = styled.h2`
+    padding-bottom: 10px;
+    flex-basis: 50%;
+    max-width: 50%;
+  `;
+  export const SmallerSubtitle = styled(Subtitle)`
+    flex-basis: 100%;
+    max-width: 100%;
+    overflow: hidden;
+    display: block;
+    text-overflow: ellipsis;
+    white-space: normal;
+    max-height: 40px;
+  `;
+  export const CardInfoSubtitle = styled.h2`
+      flex-basis: calc(100% - 120px);
+      max-width: calc(100% - 120px);
+  `;
+  export const CardDescriptionBig = styled.p`
+    font-size: 14px;
+    height: ${props => (props.theme.show ? 'auto' : '100px')};
+    overflow: hidden;
+    white-space: break-spaces;
+    text-overflow: ellipsis;
+    width: 100%;
+  `;
+  export const CardDate = styled.span`
+    flex-basis: 50%;
+    max-width: 50%;
+    text-align: right;
+  `;
+  export const CardBy = styled.span`
+    flex-basis: 100%;
+    max-width: 100%;
+    text-align: left;
+    text-transform: uppercase;
+    padding: 20px 0;
+  `;
+  export const CardBySmall = styled(CardBy)`
+    padding: 0;
+    font-size: 10px;
+    text-transform: initial;
+  `;
+  export const ImageGeneral = styled.img`
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    flex-shrink: 0;
+  `;
+// MODAL------------------------------------------------------------------------
+  export const Modal = styled.div`
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    left: 0;
+    top: 0;
+    background-color: rgba(0,0,0,.5);
+    display: flex;
+    flex-flow: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+  `;
+  export const ModalContent = styled(ContentSection)`
+    background-color: white;
+    border-radius: 8px;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    max-width: 90%;
+    @media only screen and (min-width: 48em) {
+      max-width: 500px;
+    }
+  `;
+  export const ModalInput = styled.input`
+    width: 90%;
+    height 40px;
+    line-height: 40px;
+    border-bottom: 1px solid gray;
+    margin-bottom: 10px;
+  `;
+  export const ModalLabel = styled.label`
+    width: 90%;
+    height 16px;
+    line-height: 16px;
+    color: #444444;
+    font-size: 14px;
+  `;
+// MENSAJES -------------------------------------------------------------------
+  export const ErrorMessageContainer = styled.div`
+    width: 100%;
+    padding: 10px;
+  `;
+  export const ErrorMessage = styled.span`
+    color: #ff0000ba;
+    font-size: 15px;
+    text-align: center;
+    display: block;
+  `;
+// NAVBAR -------------------------------------------------------
   export const AppBar = styled.nav`
     width: 100vw;
     position: fixed;
@@ -59,13 +251,6 @@ export const MainContainer = styled.main`
       width: auto
     }
   `;
-  export const MenuButton = styled.button`
-    flex-basis 50px;
-    max-width: 50px;
-    border: 0;
-    background-color: transparent;
-    cursor: pointer;
-  `;
   export const SearchContainer = styled.div`
     flex-basis: calc(100% - 60px);
     max-width: calc(100% - 60px);
@@ -86,13 +271,6 @@ export const MainContainer = styled.main`
     font-weight: 400;
     width: calc(100% - 50px);
   `;
-
-
-
-
-
-
-
   export const DarkModeButtonContainer = styled.div`
     flex-basis: calc(100% - 60px);
     max-width: calc(100% - 60px);
@@ -133,28 +311,7 @@ export const MainContainer = styled.main`
       transform: translateX(26px);
     }
   `;
-
-
-
-
-
-
-
-
-
-
-
-
-  export const LoginButton = styled.button`
-    flex-basis: 40px;
-    max-width: 40px;
-    height: 40px;
-    border: 0;
-    cursor: pointer;
-    border-radius: 100%;
-    color: white;
-  `;
-  export const LoginDropdown= styled.div`
+  export const MenuDropdown= styled.div`
     position: absolute;
     background: white;
     top: 15px;
@@ -168,172 +325,20 @@ export const MainContainer = styled.main`
     border-radius: 4px;
     box-shadow: 0px 5px 14px 0px rgb(68, 68, 68,.48);
   `;
-  export const LoginModal = styled.div`
-    width: 100vw;
-    height: 100vh;
-    position: absolute;
-    left: 0;
-    top: 0;
-    background-color: rgba(0,0,0,.5);
-    display: flex;
-    flex-flow: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-  `;
-  export const LoginModalContainer = styled(ContentSection)`
-    background-color: white;
-    border-radius: 8px;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    max-width: 90%;
-    @media only screen and (min-width: 48em) {
-      max-width: 500px;
-    }
-  `;
-  export const LoginInput = styled.input`
-    width: 90%;
-    height 40px;
-    line-height: 40px;
-    border-bottom: 1px solid gray;
-    margin-bottom: 10px;
-  `;
-  export const LoginLabel = styled.label`
-    width: 90%;
-    height 16px;
-    line-height: 16px;
-    color: #444444;
-    font-size: 14px;
-  `;
-  export const CloseButton = styled.button`
-    color: white;
-    background: transparent;
-    border: none;
-    font-size: 30px;
-    line-height: 25px;
-    display:block;
-    position: absolute;
-    right: 0;
-    top: -40px;
-    z-index: 1;
-    cursor: pointer;
-    @media only screen and (min-width: 48em) {
-      right: -30px;
-      top: -30px;
-    }
-  `;
-  export const GeneralButton = styled.button`
-    height: 40px;
-    line-heigth: 40px;
-    background-color: white;
-    border: 1px solid #444444;
-    color: #444444;
-    display: block;
-    min-width: 100px;
+// CARDS -------------------------------------------------------------------
+  export const CardItem = styled.div`
+    flex-basis: 100%;
+    max-width: 100%;
+    margin: 10px;
     border-radius: 4px;
+    box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.12);
     cursor: pointer;
-    margin: 5px;
     @media only screen and (min-width: 48em) {
-      min-width: 150px;
+      flex-basis: calc(33.33333333% - 20px);
+      max-width: calc(33.33333333% - 20px);
     }
   `;
-  export const FlexContainer = styled.div`
-    display: flex;
-    flex-flow: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-  `;
-
-
-
-// VIDEO CARD -------------------------------------------------------------------
-
-  export const VideoCardItem = styled.div`
-  flex-basis: 100%;
-  max-width: 100%;
-  margin: 10px;
-  border-radius: 4px;
-  box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.12);
-  cursor: pointer;
-  @media only screen and (min-width: 48em) {
-    flex-basis: calc(33.33333333% - 20px);
-    max-width: calc(33.33333333% - 20px);
-  }
-`;
-export const VideoCardItemButton = styled.button`
-  display: flex;
-  flex-flow: row;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: flex-start;
-  border: 0;
-  cursor: pointer;
-  padding: 0;
-`;
-export const VideoCardImgCont = styled.div`
-  width: 100%;
-  border-radius: 4px 4px 0 0;
-  overflow: hidden;
-  height: 180px;
-  display: block;
-`;
-export const VideoCardImg = styled.img`
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  flex-shrink: 0;
-`;
-export const VideoCardInfo = styled.div`
-  padding: 15px;
-  display: flex;
-  flex-flow: row;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: flex-start;
-  height: calc(100% - 150px);
-  text-align: left;
-`;
-export const VideoCardInfoTitle = styled.h2`
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 1.4;
-  letter-spacing: 0.6px;
-  padding-bottom: 10px;
-  flex-basis: 50%;
-  max-width: 50%;
-`;
-export const VideoCardInfoText = styled.p`
-  color: rgba(0, 0, 0, 0.54);
-  font-size: 12px;
-  font-weight: 400;
-  line-height: 1.43;
-  letter-spacing: 0.4px;
-`;
-export const VideoCardinfoDate = styled.span`
-  color: rgba(0, 0, 0, 0.54);
-  font-size: 12px;
-  flex-basis: 50%;
-  max-width: 50%;
-  text-align: right;
-`;
-export const VideoCardChannel = styled.span`
-  text-transform: uppercase;
-  font-weight: 300;
-  color: black;
-  font-size: 12px;
-  line-height: 14px;
-  padding: 20px 0;
-  text-align: left;
-  flex-basis: 100%;
-  max-width: 100%;
-`;
-
-//MODIFIED CARDS
-
-export const VideoListedItem = styled(VideoCardItem)`
+  export const CardItemListed = styled(CardItem)`
     box-shadow: none;
     border-radius: 0;
     overflow: hidden;
@@ -341,34 +346,38 @@ export const VideoListedItem = styled(VideoCardItem)`
         flex-basis: 100%;
         max-width: 100%;
     }
-`;
-export const VideoListedItemButton = styled(VideoCardItemButton)`
-    align-items: stretch;
-    justify-content: stretch;
-    width 100%;
-`;
-export const VideoListedImgCont = styled(VideoCardImgCont)`
+  `;
+  export const CardImgContainer = styled.div`
+    width: 100%;
+    border-radius: 4px 4px 0 0;
+    overflow: hidden;
+    height: 180px;
+    display: block;
+  `;
+  export const CardImgContainerListed = styled(CardImgContainer)`
     flex-basis: 50%;
     max-width: 250px;
     border-radius: 0;
-    height: 120px;
-`;
-
-export const VideoListedCardInfo = styled(VideoCardInfo)`
+    height: 80px;
+  `;
+  export const CardInfo = styled.div`
+    padding: 15px;
+    display: flex;
+    flex-flow: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    height: calc(100% - 150px);
+    text-align: left;
+  `;
+  export const CardInfoListed = styled(CardInfo)`
+    padding: 0;
+    padding-left: 15px;
     flex-basis: 50%;
     max-width: 50%;
-`;
-export const VideoListedCardInfoTitle = styled(VideoCardInfoTitle)`
-    flex-basis: 100%;
-    max-width: 100%;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-`;
-
-//Video Reproductor
-
-export const VideoReproductorContainer = styled.div`
+  `;
+// VIDEO REPRODUCTOR --------------------------------------------------------------
+  export const VideoReproductorContainer = styled.div`
     flex-basis: 100%;
     max-width: 100%;
     display: flex;
@@ -381,15 +390,14 @@ export const VideoReproductorContainer = styled.div`
         flex-basis: calc(70% - 10px);
         max-width: calc(70% - 10px);
     }
-
-`;
-export const VideoIframeContainer = styled.div`
+  `;
+  export const VideoIframeContainer = styled.div`
+    position: relative;
     width: 100%;
-    @media only screen and (min-width: 48em) {
-        height: 70%;
-    }
-`;
-export const VideoInfoContainer = styled.div`
+    height: 0;
+    padding-bottom: 56.25%;
+  `;
+  export const VideoInfoContainer = styled.div`
     width: 100%;
     display: flex;
     flex-flow: row;
@@ -397,24 +405,11 @@ export const VideoInfoContainer = styled.div`
     justify-content: flex-start;
     align-items: stretch;
     padding: 20px 0;
-    @media only screen and (min-width: 48em) {
-        height: 30%;
-    }
-`;
-export const VideoInfoContainerTitle = styled.h1`
-    font-weight: 500;
-    font-size: 16px;
-    flex-basis: 100%;
-    max-width: 100%;
-    border-bottom 1px solid rgba(0, 0, 0, 0.1);
-`;
-export const VideoInfoContainerDescr = styled.p`
-    color: black;
-    font-weight: 400;
-    font-size: 14px;
-    height: 50%;
-`;
-export const VideoInfoContainerInside = styled.div`
+    // @media only screen and (min-width: 48em) {
+    //     height: 30%;
+    // }
+  `;
+  export const VideoInfoContainerInside = styled.div`
     flex-basis: 100%;
     max-width: 100%;
     display: flex;
@@ -423,49 +418,4 @@ export const VideoInfoContainerInside = styled.div`
     justify-content: flex-start;
     align-items: center;
     padding: 10px 0;
-`;
-
-export const VideoInfoContainerChannel = styled.h2`
-    color: black;
-    font-weight: 500;
-    font-size: 14px;
-    flex-basis: calc(100% - 120px);
-    max-width: calc(100% - 120px);
-`;
-export const VideoInfoContainerSave = styled.a`
-    width: 100px;
-    position: relative;
-    border: 1px solid black;
-    height: 35px;
-    line-height: 35px;
-    cursor: pointer;
-    font-weight: 400;
-    text-align: center;
-    font-size: 12px;
-    display: inline-block;
-    letter-spacing: 1px;
-    transition: 0.2s all ease;
-    border-radius: 3px;
-    text-transform uppercase;
-    color:black;
-	padding: 0px 10px;
-`;
-
-
-export const Title = styled.h1`
-    font-size: 30px;
-    font-weight: 500;
-    line-height: 1.2;
-    letter-spacing: 1px;
-    flex-basis: 100%;
-    max-width: 100%;
-    text-align: center;
-    display: block;
-    margin: 0;
-    padding-top: 30px;
-    text-align: center;
-    text-transform: uppercase;
-    @media only screen and (min-width: 48em) {
-      font-size: 40px;
-    }
-`;
+  `;
