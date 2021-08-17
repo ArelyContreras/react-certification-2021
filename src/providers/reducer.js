@@ -1,9 +1,15 @@
 const Reducer = (state, action) => {
     switch(action.type){
-        case 'LIGHT':
-            return { theme: 'light' };
-        case 'DARK':
-            return { theme: 'dark' };
+        case 'THEME':
+            return {
+                ...state,
+                theme: action.theme
+            }
+        case 'SEARCH':
+            return {
+                ...state,
+                search: action.newSearch
+            };
         default:
             return state;
     }

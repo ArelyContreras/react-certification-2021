@@ -2,6 +2,7 @@ import React, { useState , useRef, useContext } from "react";
 import Icon from '@material-ui/core/Icon';
 import { ThemeProvider } from 'styled-components';
 import useForm from "../../hooks/form";
+import { useHistory, useLocation } from "react-router-dom";
 import useOnClickOutside from "../../hooks/useOnClickOutside";
 import { AppContext } from "../../providers/AppProvider";
 
@@ -29,6 +30,8 @@ import {AppBar,
 
 const Navbar = (props) => {
 	const ref = useRef();
+	const history = useHistory();
+    const location = useLocation();
 	const {sessionUser, setUser, unsetUser} = props;
 	const [formValues, setFormValues] = useForm({ username: '', password: ''});
 	const [openModal, setOpenModal] = useState(false);
@@ -39,21 +42,13 @@ const Navbar = (props) => {
 		toggleTheme();
 	};
 
-
-	// const { state, dispatch, handleSearch } = useContext(AppContext);
-	// const theme = state.theme;
-	// const handleThemeToggle = (e) => {
-	// 	if (theme == 'light'){
-	// 		dispatch({ type: "DARK" });
-	// 	}
-    // 	else{
-    //   		dispatch({ type: "LIGHT" });
-	// 	}
-	// };
-
 	function updateSearch(e){
 		if(e.key === 'Enter'){
-		handleSearch(e.target.value.substring(0, 20));
+			handleSearch(e.target.value.substring(0, 20));
+			if(location.pathname !== '/'){
+				history.push(`/`);
+			}
+			console.log(location.pathname !== '/')
 		}
 	}
 	function toggleModal(){

@@ -1,4 +1,4 @@
-import React, { createContext, useReducer, useState } from "react";
+import React, { createContext, useReducer } from "react";
 import Reducer from "./reducer";
 import { ThemeProvider } from 'styled-components';
 import { GlobalStyles, LightDarkTheme } from "../styles";
@@ -16,20 +16,30 @@ const AppProvider = ({ children }) => {
     const theme = state.theme;
     const specificTheme = LightDarkTheme[theme];
     const toggleTheme = () => {
+      let themeType;
       if (theme === 'light'){
-        dispatch({ type: "DARK" });
+        themeType = 'dark';
       }
       else{
-        dispatch({ type: "LIGHT" });
+        themeType = 'light';
       }
+      const typeTheme = {
+        type: 'THEME',
+        theme: themeType,
+      };
+      dispatch(typeTheme);
     };
 
+
   // SEARCH
-  // const search = state.search;
-  const [search, setSearch] = useState('wizeline'); //starts search with wizeline
-  const handleSearch = (searchParam) => {
-    setSearch(searchParam);
-  }
+    const search = state.search;
+    const handleSearch = (searchParam) => {
+      const newSearch = {
+        type: 'SEARCH',
+        newSearch: searchParam,
+      };
+      dispatch(newSearch);
+    }
 
 
   const value = { theme, toggleTheme, search, handleSearch };

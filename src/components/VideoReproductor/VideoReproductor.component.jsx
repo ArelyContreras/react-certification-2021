@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 
 import {
     VideoReproductorContainer,
@@ -8,14 +8,20 @@ import {
     VideoInfoContainerDescr,
     VideoInfoContainerInside,
     VideoInfoContainerChannel,
-    VideoInfoContainerSave} from '../StyledComponents/StyledComponents.component';
+    VideoInfoContainerSave,
+    ButtonAsLink} from '../StyledComponents/StyledComponents.component';
 
 const VideoReproductor = (props) => {
     const { videoId, title, description, channel} = props;
+    const [ showText, setShowText ] = useState(false);
+    const handleShowText = () => {
+        setShowText(!showText)
+    }
     return(
-        <VideoReproductorContainer>
+        <VideoReproductorContainer className="reproductor">
             <VideoIframeContainer>
                 <iframe
+                    className="ytPlayer"
                     width="100%"
                     height="100%"
                     src={`https://www.youtube.com/embed/${videoId}`}
@@ -26,12 +32,13 @@ const VideoReproductor = (props) => {
                 />
             </VideoIframeContainer>
             <VideoInfoContainer>
-                <VideoInfoContainerTitle>{title}</VideoInfoContainerTitle>
+                <VideoInfoContainerTitle className="TitleBorder">{title}</VideoInfoContainerTitle>
                 <VideoInfoContainerInside>
                     <VideoInfoContainerChannel>{channel}</VideoInfoContainerChannel>
-                    <VideoInfoContainerSave>Guardar</VideoInfoContainerSave>
+                    <VideoInfoContainerSave className="blackBorder">Guardar</VideoInfoContainerSave>
                 </VideoInfoContainerInside>
-                <VideoInfoContainerDescr>{description}</VideoInfoContainerDescr>
+                <VideoInfoContainerDescr theme={{ show: showText }}>{description}</VideoInfoContainerDescr>
+                <ButtonAsLink className="link" onClick={handleShowText}>Mostrar {(showText ? 'menos':'más')}</ButtonAsLink>
             </VideoInfoContainer>
         </VideoReproductorContainer>
     );

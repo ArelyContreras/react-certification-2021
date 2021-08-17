@@ -18,6 +18,9 @@ export const MainContainer = styled.main`
     align-items: stretch;
     padding: 20px;
   `;
+  export const ContentSectionReproductor = styled(ContentSection)`
+    align-items: flex-start;
+  `;
   // Video List Detils
     export const VideoDetailRelatedList = styled.div`
       flex-basis: 100%;
@@ -35,6 +38,14 @@ export const MainContainer = styled.main`
         max-width: calc(30% - 10px);
       }
     `;
+  export const ButtonAsLink = styled.button`
+    text-decoration: none;
+    font-weight: bold;
+    cursor: pointer;
+    font-size:14px;
+    padding: 10px 0;
+    text-transform: uppercase;
+  `;
 // NAVBAR -------------------------------------------------------
 
   export const AppBar = styled.nav`
@@ -384,10 +395,10 @@ export const VideoReproductorContainer = styled.div`
 
 `;
 export const VideoIframeContainer = styled.div`
+    position: relative;
     width: 100%;
-    @media only screen and (min-width: 48em) {
-        height: 70%;
-    }
+    height: 0;
+    padding-bottom: 56.25%;
 `;
 export const VideoInfoContainer = styled.div`
     width: 100%;
@@ -409,10 +420,12 @@ export const VideoInfoContainerTitle = styled.h1`
     border-bottom 1px solid rgba(0, 0, 0, 0.1);
 `;
 export const VideoInfoContainerDescr = styled.p`
-    color: black;
-    font-weight: 400;
-    font-size: 14px;
-    height: 50%;
+  font-size: 14px;
+  height: ${props => (props.theme.show ? 'auto' : '100px')};
+  overflow: hidden;
+  white-space: break-spaces;
+  text-overflow: ellipsis;
+  width: 100%;
 `;
 export const VideoInfoContainerInside = styled.div`
     flex-basis: 100%;
@@ -426,16 +439,14 @@ export const VideoInfoContainerInside = styled.div`
 `;
 
 export const VideoInfoContainerChannel = styled.h2`
-    color: black;
     font-weight: 500;
     font-size: 14px;
     flex-basis: calc(100% - 120px);
     max-width: calc(100% - 120px);
 `;
-export const VideoInfoContainerSave = styled.a`
+export const VideoInfoContainerSave = styled.button`
     width: 100px;
     position: relative;
-    border: 1px solid black;
     height: 35px;
     line-height: 35px;
     cursor: pointer;
@@ -447,7 +458,6 @@ export const VideoInfoContainerSave = styled.a`
     transition: 0.2s all ease;
     border-radius: 3px;
     text-transform uppercase;
-    color:black;
 	padding: 0px 10px;
 `;
 
