@@ -1,30 +1,28 @@
 import React, {useContext} from 'react';
-import { useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { AppContext } from "../../providers/AppProvider";
-import {
-  CardItemListed,
-  CardContainerTopCenter,
-  CardImgContainerListed,
-  ImageGeneral,
-  CardInfoListed,
-  SmallerSubtitle,
-  CardBySmall} from '../StyledComponents/StyledComponents.component';
-
+import { CardItemListed, CardImgContainerListed, CardInfoListed, CardBySmall} from  '../../styles/cards';
+import { ImageGeneral, SmallerSubtitle } from '../../styles/generals';
 
 const VideoCardList = (props) => {
-    const { title, idVid, thumb, channel } = props;
+    const { title, idVid, thumb, channel, favoriteCard } = props;
     const { setVideoId } = useContext(AppContext);
-    const history = useHistory();
 
+    let navRoute;
+    if(favoriteCard){
+      navRoute = `/favorites/${idVid}`;
+    }
+    else{
+      navRoute =  `/details/${idVid}`;
+    }
     function selectVideo(e, data){
-      e.preventDefault();
       setVideoId(data);
-        history.push(`/details/${data}`);
     }
 
     return (
       <CardItemListed className="card">
-        <CardContainerTopCenter onClick={((e) => selectVideo(e, idVid))}>
+        {/* <CardContainerTopCenter onClick={((e) => selectVideo(e, idVid))}> */}
+        <Link className="cardContainerTopCenter" to={location => navRoute} onClick={((e) => selectVideo(e, idVid))}>
           <CardImgContainerListed>
             <ImageGeneral  src={thumb} alt={title} title={title} />
           </CardImgContainerListed>
@@ -32,7 +30,8 @@ const VideoCardList = (props) => {
             <SmallerSubtitle>{title}</SmallerSubtitle>
             <CardBySmall>{channel}</CardBySmall>
           </CardInfoListed>
-        </CardContainerTopCenter>
+          </Link>
+        {/* </CardContainerTopCenter> */}
       </CardItemListed>
     );
   };

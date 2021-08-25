@@ -21,12 +21,24 @@ export default createGlobalStyle`
                         color: ${theme.buttons.blackborder.color};
                     }
                 }
+                .errorMessage{
+                    background-color: ${theme.message.error.background};
+                    color: ${theme.message.error.color}
+                }
                 nav{
                     background-color: ${theme.nav.background};
                     border-bottom: 1px solid #E6EAEA;
                     color: ${theme.nav.text};
                     .hamburguerMenu{
                         color: ${theme.nav.text};
+                    }
+                    .sideBarElement{
+                        > div {
+                            background-color: ${theme.nav.background};
+                        }
+                        ul li a {
+                            color: ${theme.nav.text};
+                        }
                     }
                     .searchBar input{
                         color: ${theme.nav.text};
@@ -48,6 +60,14 @@ export default createGlobalStyle`
                     }
                     .userLogin span{
                         color: ${theme.nav.loginIcon.icon};
+                    }
+                }
+                .modal{
+                    >div{
+                        background-color: ${theme.general.background};
+                        label, input {
+                            color: ${theme.general.text};
+                        }
                     }
                 }
                 .card{

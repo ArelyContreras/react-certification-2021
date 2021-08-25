@@ -1,4 +1,4 @@
-import React, { createContext, useReducer, useEffect } from "react";
+import React, { createContext, useReducer } from "react";
 import Reducer from "./reducer";
 import { ThemeProvider } from 'styled-components';
 import { GlobalStyles, LightDarkTheme } from "../styles";
@@ -6,16 +6,14 @@ import user from '../mocks/user.json';
 import {gapiClient, buildQueryParams} from '../helpers/helpers'
 const KEY = process.env.REACT_APP_YT_KEY;
 
-let  currentUser = localStorage.getItem("user")
-  ? JSON.parse(localStorage.getItem("user"))
+let  currentUser = window.localStorage.getItem("user")
+  ? JSON.parse(window.localStorage.getItem("user"))
   : "";
-
-  console.log(localStorage.getItem("theme"));
-let currentTheme = localStorage.getItem("theme")
-? localStorage.getItem("theme")
-: "";
+let userPreferences = window.localStorage.getItem("user-preferences")
+  ? JSON.parse(window.localStorage.getItem("user-preferences"))
+  : "";
 const initialState = {
-  theme: currentTheme || "light",
+  theme: userPreferences.theme || "light",
   search: 'wizeline',
   openModal: false,
   openDropdown: false,
@@ -25,7 +23,9 @@ const initialState = {
   videos: null,
   videoDetails: null,
   relatedVideos: null,
-  loading: null,
+  isFavorite: false,
+  favoriteVideos: userPreferences.favoriteVideos || [],
+  loadingVid: null,
   error: null,
   videoId: "",
 }
@@ -39,8 +39,6 @@ const AppProvider = ({ children }) => {
     const errorMessage = state.errorMessage;
     const setUser = (username, password, setOpenModal) => {
       if (username === user.username && password === user.password) {
-      console.log(username, password)
-
         window.localStorage.setItem('user', JSON.stringify(user));
         const setSessionUser = {
           type: 'LOGIN',
@@ -56,14 +54,29 @@ const AppProvider = ({ children }) => {
           statusModal: false,
         };
         dispatch(toggleModal);
-        window.localStorage.setItem('theme', theme);
+        const userPreferences = {
+          theme : theme
+        }
+        window.localStorage.setItem('user-preferences', JSON.stringify(userPreferences));
       }
       else{
         const setError = {
           type: 'LOGIN_ERROR',
           error: 'User o password incorrecto, favor de verificar',
         };
-        dispatch(setError);
+        const unsetError = {
+          type: 'LOGIN_ERROR',
+          error: null,
+        };
+
+        if(errorMessage){
+          dispatch(unsetError);
+          setTimeout(function(){dispatch(setError)},200);
+        }
+        else{
+          dispatch(setError);
+        }
+
       }
     };
 
@@ -73,7 +86,6 @@ const AppProvider = ({ children }) => {
       };
       dispatch(setSessionUser);
       window.localStorage.removeItem('user');
-      window.localStorage.removeItem('theme');
     };
   // SEARCH
     const search = state.search;
@@ -88,15 +100,14 @@ const AppProvider = ({ children }) => {
     const videos = state.videos;
     const videoDetails = state.videoDetails;
     const relatedVideos = state.relatedVideos;
-    const loading = state.loading;
+    const loadingVid = state.loadingVid;
     const error = state.error;
     const videoId = state.videoId;
     const setVideoId = (id) => {
       dispatch({type: 'SET_VIDEO_ID', videoId: id});
     }
     const fetchVideos = async (query) => {
-      // const query = {type: 'search', details: 'snippet', search: search, maxResults: '12'};
-        dispatch({type: 'SET_LOADING', status: true});
+        dispatch({type: 'SET_LOADING_VIDEO', status: true});
         try {
             const queryParams = buildQueryParams({
                 part: query.details,
@@ -106,7 +117,6 @@ const AppProvider = ({ children }) => {
                 type: 'video',
                 videoDefinition: 'high'
             });
-
             const response = await gapiClient(`/search?${queryParams}&key=${KEY}`);
             dispatch({type: 'SET_VIDEOS', response: response.data.items});
         }
@@ -114,11 +124,11 @@ const AppProvider = ({ children }) => {
           dispatch({type: 'SET_ERROR', error: err});
         }
         finally {
-          dispatch({type: 'SET_LOADING', status: false});
+          dispatch({type: 'SET_LOADING_VIDEO', status: false});
         }
     }
     const fetchVideoDetails = async (query) => {
-      dispatch({type: 'SET_LOADING', status: true});
+      dispatch({type: 'SET_LOADING_VIDEO', status: true});
         try {
             const queryParams = buildQueryParams({
                 part: query.details,
@@ -134,11 +144,11 @@ const AppProvider = ({ children }) => {
           dispatch({type: 'SET_ERROR', error: err});
         }
         finally {
-        dispatch({type: 'SET_LOADING', status: false});
+        dispatch({type: 'SET_LOADING_VIDEO', status: false});
         }
     }
     const fetchRelatedVideos = async (query) => {
-      dispatch({type: 'SET_LOADING', status: true});
+      dispatch({type: 'SET_LOADING_VIDEO', status: true});
         try {
             const queryParams = buildQueryParams({
                 part: query.details,
@@ -156,8 +166,44 @@ const AppProvider = ({ children }) => {
           dispatch({type: 'SET_ERROR', error: err});
         }
         finally {
-        dispatch({type: 'SET_LOADING', status: false});
+        dispatch({type: 'SET_LOADING_VIDEO', status: false});
         }
+    }
+  // FAVORITE VIDEOS
+    // const videoIdFav = state.videoIdFav;
+    const isFavorite = state.isFavorite;
+    const favoriteVideos = state.favoriteVideos;
+
+    const setIsFavorite = (state) => {
+      dispatch({type: 'SET_IS_FAVORITE', state: state});
+    }
+    const addFavoriteVideo = (video) => {
+      if(userPreferences === ''){
+        userPreferences = {favoriteVideos : [video]};
+      }
+      else{
+        if(!favoriteVideos.length){
+          userPreferences['favoriteVideos'] = []
+        }
+        userPreferences.favoriteVideos.push(video);
+      }
+      // if(!userPreferences.favoriteVideos.includes(video)){
+        window.localStorage.setItem('user-preferences', JSON.stringify(userPreferences));
+        dispatch({tpe: 'ADD_FAVORITE_VIDEO', vid: video});
+        dispatch({type: 'SET_IS_FAVORITE', state: true});
+
+      // }
+    }
+    const deleteFavoriteVideo = (id) => {
+      for(var i=0; i<favoriteVideos.length;i++){
+        if (favoriteVideos[i]['id'] === id){
+            userPreferences.favoriteVideos.splice(i, 1);
+            window.localStorage.setItem('user-preferences', JSON.stringify(userPreferences));
+            dispatch({type: 'DELETE_FAVORITE_VIDEO', index: i});
+            dispatch({type: 'SET_IS_FAVORITE', state: false});
+            break;
+        }
+      }
     }
   //DARK THEME
     const theme = state.theme;
@@ -176,35 +222,33 @@ const AppProvider = ({ children }) => {
       };
       dispatch(typeTheme);
       if(sessionUser){
-        window.localStorage.setItem('theme', themeType);
+        const themePref = {theme : themeType};
+        if(userPreferences === ''){
+          userPreferences = themePref;
+        }
+        else{
+          userPreferences['theme'] = themeType
+        }
+
+        window.localStorage.setItem('user-preferences', JSON.stringify(userPreferences));
       }
     };
 
-    //TOGGLES
-      const openModal = state.openModal;
-      const setOpenModal = (status) => {
-        const toggleModal = {
-          type: 'TOGGLEMODAL',
-          statusModal: status,
-        };
-        dispatch(toggleModal);
-        if(errorMessage){
-          const setError = {
-            type: 'LOGIN_ERROR',
-            error: null,
-          };
-          dispatch(setError);
-        }
-      };
-      const openDropdown = state.openDropdown;
-      const setOpenDropdown = (status) => {
-        const toggleDropdown = {
-          type: 'TOGGLEDROPDOWN',
-          statusDropdown: status,
-        };
-        dispatch(toggleDropdown);
-      };
-
+  //TOGGLES
+    const openModal = state.openModal;
+    const openDropdown = state.openDropdown;
+    const setOpenModal = (status) => {
+      dispatch({type: 'TOGGLEMODAL', statusModal: status});
+      if(openDropdown === true) {
+        dispatch({type: 'TOGGLEDROPDOWN', statusDropdown: false});
+      }
+      if(errorMessage){
+        dispatch({type: 'LOGIN_ERROR', error: null});
+      }
+    };
+    const setOpenDropdown = (status) => {
+      dispatch({type: 'TOGGLEDROPDOWN', statusDropdown: status});
+    };
   const value = {
     theme, toggleTheme,
     search, handleSearch,
@@ -214,18 +258,12 @@ const AppProvider = ({ children }) => {
     videoId, setVideoId,
     videos, fetchVideos,
     videoDetails, fetchVideoDetails,
+    isFavorite, setIsFavorite,
+    favoriteVideos, addFavoriteVideo, deleteFavoriteVideo,
     relatedVideos, fetchRelatedVideos,
-    loading,
+    loadingVid,
     error
   };
-
-    useEffect(() => {
-      fetchVideos();
-      fetchVideoDetails();
-      fetchRelatedVideos();
-    }, [])
-
-
 
   return (
     <AppContext.Provider value={value}>

@@ -1,6 +1,5 @@
 import React from 'react';
-import { MainContainer } from '../../components/StyledComponents/StyledComponents.component';
-
+import { MainContainer } from '../../styles/containers';
 
 function Layout({ children }) {
   return <MainContainer>{children}</MainContainer>;

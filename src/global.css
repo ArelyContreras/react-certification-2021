@@ -34,7 +34,9 @@ body::-webkit-scrollbar {
   color: white;
   padding: 0.4rem;
 }
-
+a{
+  text-decoration: none;
+}
 h1,h2,p,span{
   font-family: 'Roboto', sans-serif;
   margin: 0;
@@ -92,4 +94,25 @@ nav{
 }
 .material-icons{
   vertical-align: middle;
+}
+.cardContainer{
+  display: flex;
+  flex-flow: row;
+  flex-wrap: wrap;
+  justify-content: stretch;
+  align-items: stretch;
+  width: 100%;
+}
+.cardContainerTopCenter{
+  display: flex;
+  flex-flow: row;
+  flex-wrap: wrap;
+  width: 100%;
+  justify-content: center;
+  align-items: flex-start;
+}
+.sideBarElement a{
+  display: block;
+  cursor: pointer;
+  padding: 0 20px;
 }

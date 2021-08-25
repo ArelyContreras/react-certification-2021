@@ -1,7 +1,5 @@
 import React from 'react';
-import {
-    ContainerFluidMain,
-    ContentSection } from '../../components/StyledComponents/StyledComponents.component';
+import { ContainerFluidMain, ContentSection } from '../../styles/containers';
 
 const PageNotFound = (props) => {
     return (

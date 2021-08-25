@@ -3,10 +3,10 @@ export const LightDarkTheme = {
             general: {
                 background: '#f4f7f6',
                 text: 'black',
-                borderTitle: '1px solid rgba(0,0,0,0.1)'
+                borderTitle: '1px solid rgba(0,0,0,0.1)',
             },
             nav:{
-                background: '#49c5b6',
+                background: '#998bb4',
                 text: 'black',
                 switch:{
                     switch: '#cccccc',
@@ -26,6 +26,12 @@ export const LightDarkTheme = {
             },
             cards:{
                 textGray: 'rgba(0, 0, 0, 0.54)'
+            },
+            message:{
+                error:{
+                    background: 'rgb(255, 231, 236)',
+                    color: 'rgb(102, 9, 27)'
+                }
             },
             transition: '0.5s',
         },
@@ -56,6 +62,12 @@ export const LightDarkTheme = {
             },
             cards:{
                 textGray: 'white'
+            },
+            message:{
+                error:{
+                    background: 'rgb(25, 2, 6)',
+                    color: 'rgb(255, 162, 180)'
+                }
             },
             transition: '0.5s',
         }

@@ -1,7 +1,8 @@
 
 import HomePage from '../pages/Home';
 import VideoDetailsPage from '../pages/VideoDetails'
-import Favorites from '../pages/Favorites';
+import FavoritesPage from '../pages/Favorites';
+import FavoritesDetailsPage from '../pages/FavoritesDetails';
 import PageNotFound from '../pages/PageNotFound';
 
 const routes =[
@@ -18,7 +19,12 @@ const routes =[
   },
   {
     path:'/favorites',
-    component: Favorites,
+    component: FavoritesPage,
+    isPrivate: true
+  },
+  {
+    path:'/favorites/:videoId',
+    component: FavoritesDetailsPage,
     isPrivate: true
   },
   {

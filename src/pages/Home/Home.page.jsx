@@ -1,18 +1,21 @@
 import React, {useContext} from 'react';
 import { AppContext } from "../../providers/AppProvider";
 import VideoCard from '../../components/VideoCard';
-
-import {
-  ContainerFluidMain,
-  ContentSection,
-  Title } from '../../components/StyledComponents/StyledComponents.component';
+import { ContainerFluidMain, ContentSection, FlexContainer } from '../../styles/containers';
+import { LoaderPage, Loader } from '../../styles/generals';
 
 const HomePage = (props) => {
-  const {videos} = useContext(AppContext);
-
+  const {videos, loadingVid} = useContext(AppContext);
   return(
     <ContainerFluidMain theme={{ section: 'home' }}>
-      <Title>Welcome to the Challenge!</Title>
+      {(loadingVid) ?
+        <LoaderPage>
+          <FlexContainer>
+            <Loader></Loader>
+          </FlexContainer>
+        </LoaderPage>
+        : ''
+      }
       {videos &&
         <ContentSection role="row">
           {

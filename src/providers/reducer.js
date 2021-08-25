@@ -61,10 +61,34 @@ const Reducer = (state, action) => {
                 ...state,
                 relatedVideos: action.response
             };
-        case "SET_LOADING":
+        case "SET_IS_FAVORITE":
             return{
                 ...state,
-                loading: action.status
+                isFavorite: action.state
+            };
+        case "ADD_FAVORITE_VIDEO":
+            const fav = [...state.favoriteVideos];
+            fav.push(action.vid)
+            return{
+                ...state,
+                favoriteVideos: fav
+            };
+        case "DELETE_FAVORITE_VIDEO":
+            const a = [...state.favoriteVideos]
+            a.splice(action.index, 1)
+            return{
+                ...state,
+                favoriteVideos: a
+            };
+        case "SET_FAVORITE_DETAILS":
+            return{
+                ...state,
+                favoriteVideo: action.video
+            };
+        case "SET_LOADING_VIDEO":
+            return{
+                ...state,
+                loadingVid: action.status
             };
         case "SET_ERROR":
             return{
