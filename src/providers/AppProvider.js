@@ -189,7 +189,7 @@ const AppProvider = ({ children }) => {
       }
       // if(!userPreferences.favoriteVideos.includes(video)){
         window.localStorage.setItem('user-preferences', JSON.stringify(userPreferences));
-        dispatch({tpe: 'ADD_FAVORITE_VIDEO', vid: video});
+        dispatch({type: 'ADD_FAVORITE_VIDEO', vid: video});
         dispatch({type: 'SET_IS_FAVORITE', state: true});
 
       // }
