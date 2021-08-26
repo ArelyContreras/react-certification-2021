@@ -3,7 +3,7 @@ import Reducer from "./reducer";
 import { ThemeProvider } from 'styled-components';
 import { GlobalStyles, LightDarkTheme } from "../styles";
 import user from '../mocks/user.json';
-import {gapiClient, buildQueryParams} from '../helpers/helpers'
+import {gapiClient, buildQueryParams} from '../helpers/helpers';
 const KEY = process.env.REACT_APP_YT_KEY;
 
 let  currentUser = window.localStorage.getItem("user")
@@ -28,73 +28,52 @@ const initialState = {
   loadingVid: null,
   error: null,
   videoId: "",
+  formValues: { username: '', password: ''}
 }
 
 const AppProvider = ({ children }) => {
 
   const [state, dispatch] = useReducer(Reducer, initialState);
-
+  const formValues = state.formValues;
+  const setFormValues = (e) => {
+    dispatch({type: 'SET_LOGIN_VALUES', name: e.target.name, value: e.target.value})
+  }
   // LOGIN
     const sessionUser = state.sessionUser;
     const errorMessage = state.errorMessage;
     const setUser = (username, password, setOpenModal) => {
       if (username === user.username && password === user.password) {
         window.localStorage.setItem('user', JSON.stringify(user));
-        const setSessionUser = {
-          type: 'LOGIN',
-          sessionUser: user,
-        };
-        dispatch(setSessionUser);
-        const success = {
-          type: 'LOGIN_SUCCESS',
-        };
-        dispatch(success);
-        const toggleModal = {
-          type: 'TOGGLEMODAL',
-          statusModal: false,
-        };
-        dispatch(toggleModal);
+        dispatch({type: 'LOGIN', sessionUser: user});
+        dispatch({type: 'LOGIN_SUCCESS'});
+        dispatch({type: 'SET_LOGIN_VALUES', name: 'username', value: ''})
+        dispatch({type: 'SET_LOGIN_VALUES', name: 'password', value: ''})
+        dispatch({type: 'TOGGLEMODAL', statusModal: false});
         const userPreferences = {
           theme : theme
         }
         window.localStorage.setItem('user-preferences', JSON.stringify(userPreferences));
       }
       else{
-        const setError = {
-          type: 'LOGIN_ERROR',
-          error: 'User o password incorrecto, favor de verificar',
-        };
-        const unsetError = {
-          type: 'LOGIN_ERROR',
-          error: null,
-        };
-
         if(errorMessage){
-          dispatch(unsetError);
-          setTimeout(function(){dispatch(setError)},200);
+          dispatch({type: 'LOGIN_ERROR', error: null});
+          setTimeout(function(){dispatch({type: 'LOGIN_ERROR', error: 'User o password incorrecto, favor de verificar'})},200);
         }
         else{
-          dispatch(setError);
+          dispatch({type: 'LOGIN_ERROR', error: 'User o password incorrecto, favor de verificar'});
         }
 
       }
     };
 
     const unsetUser = () => {
-      const setSessionUser = {
-        type: 'LOGOUT',
-      };
-      dispatch(setSessionUser);
+      dispatch({type: 'LOGOUT'});
       window.localStorage.removeItem('user');
     };
   // SEARCH
     const search = state.search;
     const handleSearch = (searchParam) => {
-      const newSearch = {
-        type: 'SEARCH',
-        newSearch: searchParam,
-      };
-      dispatch(newSearch);
+      dispatch({type: 'SEARCH', newSearch: searchParam});
     }
   // VIDEOS
     const videos = state.videos;
@@ -118,6 +97,7 @@ const AppProvider = ({ children }) => {
                 videoDefinition: 'high'
             });
             const response = await gapiClient(`/search?${queryParams}&key=${KEY}`);
+            // console.log(response);
             dispatch({type: 'SET_VIDEOS', response: response.data.items});
         }
         catch(err){
@@ -216,11 +196,7 @@ const AppProvider = ({ children }) => {
       else{
          themeType = 'light';
       }
-      const typeTheme = {
-        type: 'THEME',
-        theme: themeType,
-      };
-      dispatch(typeTheme);
+      dispatch({type: 'THEME', theme: themeType});
       if(sessionUser){
         const themePref = {theme : themeType};
         if(userPreferences === ''){
@@ -262,7 +238,8 @@ const AppProvider = ({ children }) => {
     favoriteVideos, addFavoriteVideo, deleteFavoriteVideo,
     relatedVideos, fetchRelatedVideos,
     loadingVid,
-    error
+    error,
+    formValues, setFormValues
   };
 
   return (

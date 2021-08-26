@@ -20,6 +20,20 @@ const Reducer = (state, action) => {
                 ...state,
                 openDropdown: action.statusDropdown
             };
+        case 'SET_LOGIN_VALUES':
+            const userData = {...state.formValues};
+            var username = userData.username;
+            var password = userData.password;
+            if(action.name === 'username'){
+                username = action.value;
+            }
+            else{
+                password = action.value;
+            }
+            return{
+                ...state,
+                formValues: {username: username, password: password}
+            }
         case 'LOGIN':
             return{
                 ...state,

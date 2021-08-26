@@ -10,17 +10,14 @@ import routes from '../../config/routes';
 
 
 function App() {
-  const { search, fetchVideos, videoId, fetchVideoDetails, fetchRelatedVideos } = useContext(AppContext);
+  const { videoId, fetchVideoDetails, fetchRelatedVideos } = useContext(AppContext);
 
   useDebounce(() => {
-    if(search){
-      fetchVideos({type: 'search', details: 'snippet', search: search, maxResults: '12'})
-    }
     if(videoId){
       fetchVideoDetails({type: 'videos', details: 'contentDetails, player, snippet', id: videoId});
 		  fetchRelatedVideos({type: 'search', details: 'snippet', id: videoId, maxResults: '8'});
     }
-  }, [search, videoId], 300)
+  }, [videoId], 300)
 
   return (
     <div>

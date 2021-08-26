@@ -1,6 +1,5 @@
 import React, { useRef, useContext } from "react";
 import Icon from '@material-ui/core/Icon';
-import useForm from "../../hooks/form";
 import useOnClickOutside from "../../hooks/useOnClickOutside";
 import { AppContext } from "../../providers/AppProvider";
 import { FlexContainer } from '../../styles/containers';
@@ -12,14 +11,15 @@ import { MenuDropdown } from '../../styles/navbar';
 const Login = () => {
 	const refButton = useRef();
 	const refModal = useRef();
-    const [formValues, setFormValues] = useForm({ username: '', password: ''});
-	const { openModal, setOpenModal,
+	const { formValues, setFormValues, openModal, setOpenModal,
             openDropdown, setOpenDropdown,
 			sessionUser, setUser, unsetUser, errorMessage } = useContext(AppContext);
-
 	const handleSetUser = () => {
 		setUser(formValues.username, formValues.password);
 	}
+    const handleFormValues = (e) => {
+        setFormValues(e)
+    }
 	function handleModal(){
 		setOpenModal(!openModal);
 	}
@@ -60,9 +60,9 @@ const Login = () => {
                 <Modal className="modal">
                     <ModalContent ref={refModal}>
                         <ModalLabel htmlFor="username">Username</ModalLabel>
-                        <ModalInput type="text" name="username" onChange={setFormValues}/>
+                        <ModalInput type="text" name="username" onChange={handleFormValues}/>
                         <ModalLabel htmlFor="password">Password</ModalLabel>
-                        <ModalInput type="text" name="password" onChange={setFormValues}/>
+                        <ModalInput type="text" name="password" onChange={handleFormValues}/>
                         {errorMessage ?
                             <ErrorMessageContainer className="errorMessage"><ErrorMessage>{errorMessage}</ErrorMessage></ErrorMessageContainer>
                             : null
