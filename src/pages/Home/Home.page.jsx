@@ -1,8 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-
-import videos from '../../mocks/youtube-videos-mock.json'
 import VideoCard from '../../components/VideoCard';
+
+import {
+  ContainerFluidMain,
+  ContentSection } from '../../components/StyledComponents/StyledComponents.component';
 
 export const Title = styled.h1`
     font-size: 30px;
@@ -22,34 +24,37 @@ export const Title = styled.h1`
       font-size: 40px;
     }
 `;
-export const HomeContent = styled.section`
-  max-width: 1135px;
-  margin: 0 auto;
-`;
-export const HomeContentSection = styled.div`
-  display: flex;
-  flex-flow: row;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  align-items: stretch;
-  padding: 20px;
-`;
-const HomePage = () => (
-  <HomeContent data-testid="home-view" className="homepage">
-    <Title data-testid="page-name">Welcome to the Challenge!</Title>
-    <HomeContentSection>
-      {videos.items.map((video, key) => (
-        <VideoCard
-          data-testid="video-card-item"
-          key={key}
-          title={video.snippet.title}
-          videoId={video.id.videoId}
-          thumb={video.snippet.thumbnails.medium}
-          description={video.snippet.description}
-        />
-      ))}
-    </HomeContentSection>
-  </HomeContent>
-);
+
+const HomePage = (props) => {
+  const {videos}= props;
+  // console.log(videos)
+  return(
+    <ContainerFluidMain data-testid="home-view" theme={{ section: 'home' }}>
+      <Title data-testid="page-name">Welcome to the Challenge!</Title>
+      {videos &&
+        <ContentSection>
+          {
+            videos
+              .filter(video => video.id.kind === 'youtube#video')
+              .map((video, key) => (
+                <VideoCard
+                  data-testid="video-card-item"
+                  key={key}
+                  title={video.snippet.title}
+                  videoId={video.id.videoId}
+                  thumb={video.snippet.thumbnails.medium.url}
+                  description={video.snippet.description}
+                  channel={video.snippet.channelTitle}
+                  publishedDate={video.snippet.publishedAt}
+                  // handleVideoSelect={handleVideoSelect}
+                  // onClick={handleClick(video.id.videoId)}
+                />
+              ))
+          }
+        </ContentSection>
+      }
+    </ContainerFluidMain>
+  )
+};
 
 export default HomePage;
