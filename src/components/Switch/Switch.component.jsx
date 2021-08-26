@@ -3,7 +3,7 @@ import { AppContext } from "../../providers/AppProvider";
 import { DarkModeButtonContainer, DarkModeSwitch, DarkModeInput, DarkModeSlider } from '../../styles/navbar';
 
 const Switch = () => {
-    const { toggleTheme } = useContext(AppContext);
+    const {theme, toggleTheme } = useContext(AppContext);
 	const handleThemeToggle = (e) => {
 		toggleTheme();
 	};
@@ -11,7 +11,7 @@ const Switch = () => {
     return(
         <DarkModeButtonContainer className="switchDarkMode">
             <DarkModeSwitch>
-                <DarkModeInput onClick={handleThemeToggle} aria-label="Darkmode" type="checkbox" />
+                <DarkModeInput onClick={handleThemeToggle} aria-label="Darkmode" data-theme={theme} type="checkbox" />
                 <DarkModeSlider></DarkModeSlider>
             </DarkModeSwitch>
         </DarkModeButtonContainer>

@@ -19,7 +19,7 @@ const HomePage = (props) => {
   }, [search, videoId], 300)
 
   return(
-    <ContainerFluidMain theme={{ section: 'home' }}>
+    <ContainerFluidMain theme={{ section: 'home' }} data-testid="homeContainer">
       {(loadingVid) ?
         <LoaderPage>
           <FlexContainer>

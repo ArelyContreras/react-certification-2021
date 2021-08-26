@@ -1,20 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import React from 'react';
 import AppContext from '../providers/AppProvider';
-
-import HomePage from '../pages/Home';
-
-import App from '../components/App';
-// src/setupTests.js
-import { server } from '../mocks/server.js';
-// Establish API mocking before all tests.
-beforeAll(() => server.listen());
-// Clean up after the tests are finished.
-afterAll(() => server.close());
-
-// beforeEach(() => {
-//     render(<Home />);
-// });
+import FavoritesPage from '../pages/Favorites';
 
 describe('<Home />', () => {
 
@@ -26,12 +13,12 @@ describe('<Home />', () => {
         const response = await
         render(
             <AppContext>
-                 <HomePage />
+                 <FavoritesPage />
              </AppContext>
 
         )
-        const sectionHome = screen.getByTestId("homeContainer");
-        expect(sectionHome).toBeInTheDocument();
+        // const sectionHome = screen.getByTestId("homeContainer");
+        // expect(sectionHome).toBeInTheDocument();
     });
 
 })

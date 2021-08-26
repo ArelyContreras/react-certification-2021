@@ -21,7 +21,7 @@ const Sidebar = () => {
             <HamburguerButton ref={refSidebar} onClick={makeOpenSideBar} className="hamburguerMenu" aria-label='Hamburguer'>
                 <Icon>menu</Icon>
             </HamburguerButton>
-            <SidebarMenu className="sideBarElement" isOpen={openSideBar}>
+            <SidebarMenu data-testid="sidebar" className="sideBarElement" isOpen={openSideBar}>
                 <SidebarMenuContainer isOpen={openSideBar}>
                     <SideBarMenuList>
                         <SideBarMenuListItem>
