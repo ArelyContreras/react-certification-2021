@@ -1,57 +1,43 @@
-import React, { useLayoutEffect } from 'react';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import React, {useContext} from 'react';
+import { BrowserRouter, Switch } from 'react-router-dom';
+import { AppContext } from "../../providers/AppProvider";
+import useDebounce from '../../hooks/useDebounce';
 
-import AuthProvider from '../../providers/Auth';
-import HomePage from '../../pages/Home';
-import LoginPage from '../../pages/Login';
-import NotFound from '../../pages/NotFound';
-import SecretPage from '../../pages/Secret';
-import Private from '../Private';
-import Fortune from '../Fortune';
 import Layout from '../Layout';
-import { random } from '../../utils/fns';
+import Navbar from '../Navbar';
+import AppRoute from '../AppRoute';
+import routes from '../../config/routes';
+
 
 function App() {
-  useLayoutEffect(() => {
-    const { body } = document;
+  const { videoId, fetchVideoDetails, fetchRelatedVideos } = useContext(AppContext);
 
-    function rotateBackground() {
-      const xPercent = random(100);
-      const yPercent = random(100);
-      body.style.setProperty('--bg-position', `${xPercent}% ${yPercent}%`);
+  useDebounce(() => {
+    if(videoId){
+      fetchVideoDetails({type: 'videos', details: 'contentDetails, player, snippet', id: videoId});
+		  fetchRelatedVideos({type: 'search', details: 'snippet', id: videoId, maxResults: '8'});
     }
-
-    const intervalId = setInterval(rotateBackground, 3000);
-    body.addEventListener('click', rotateBackground);
-
-    return () => {
-      clearInterval(intervalId);
-      body.removeEventListener('click', rotateBackground);
-    };
-  }, []);
+  }, [videoId], 300)
 
   return (
-    <BrowserRouter>
-      <AuthProvider>
-        <Layout>
-          <Switch>
-            <Route exact path="/">
-              <HomePage />
-            </Route>
-            <Route exact path="/login">
-              <LoginPage />
-            </Route>
-            <Private exact path="/secret">
-              <SecretPage />
-            </Private>
-            <Route path="*">
-              <NotFound />
-            </Route>
-          </Switch>
-          <Fortune />
-        </Layout>
-      </AuthProvider>
-    </BrowserRouter>
+    <div>
+      <BrowserRouter style={{ overflow: 'hidden' }}>
+          <Layout>
+            <Navbar/>
+            <Switch>
+              {routes.map((route) => (
+                <AppRoute
+                  key={route.path}
+                  exact
+                  path={route.path}
+                  component={route.component}
+                  isPrivate={route.isPrivate}
+                />
+              ))}
+            </Switch>
+          </Layout>
+      </BrowserRouter>
+    </div>
   );
 }
 

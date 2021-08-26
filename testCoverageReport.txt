@@ -1,0 +1,19 @@
+--------------------------|----------|----------|----------|----------|-------------------|
+File                      |  % Stmts | % Branch |  % Funcs |  % Lines | Uncovered Line #s |
+--------------------------|----------|----------|----------|----------|-------------------|
+All files                 |      100 |      100 |      100 |      100 |                   |
+ components/App           |      100 |      100 |      100 |      100 |                   |
+  App.component.jsx       |      100 |      100 |      100 |      100 |                   |
+ components/Navbar        |      100 |      100 |      100 |      100 |                   |
+  Navbar.component.jsx    |      100 |      100 |      100 |      100 |                   |
+ components/VideoCard     |      100 |      100 |      100 |      100 |                   |
+  VideoCard.component.jsx |      100 |      100 |      100 |      100 |                   |
+ pages/Home               |      100 |      100 |      100 |      100 |                   |
+  Home.page.jsx           |      100 |      100 |      100 |      100 |                   |
+--------------------------|----------|----------|----------|----------|-------------------|
+
+Test Suites: 2 passed, 2 total
+Tests:       7 passed, 7 total
+Snapshots:   0 total
+Time:        15.029s
+Ran all test suites related to changed files.

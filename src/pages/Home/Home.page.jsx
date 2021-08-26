@@ -1,39 +1,54 @@
-import React, { useRef } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import React, {useContext} from 'react';
+import { AppContext } from "../../providers/AppProvider";
+import useDebounce from '../../hooks/useDebounce';
+import VideoCard from '../../components/VideoCard';
+import { ContainerFluidMain, ContentSection, FlexContainer } from '../../styles/containers';
+import { LoaderPage, Loader } from '../../styles/generals';
 
-import { useAuth } from '../../providers/Auth';
-import './Home.styles.css';
+const HomePage = (props) => {
+  const {videos, loadingVid,
+    search, fetchVideos, videoId, fetchVideoDetails, fetchRelatedVideos} = useContext(AppContext);
+  useDebounce(() => {
+    if(search){
+      fetchVideos({type: 'search', details: 'snippet', search: search, maxResults: '12'})
+    }
+    if(videoId){
+      fetchVideoDetails({type: 'videos', details: 'contentDetails, player, snippet', id: videoId});
+		  fetchRelatedVideos({type: 'search', details: 'snippet', id: videoId, maxResults: '8'});
+    }
+  }, [search, videoId], 300)
 
-function HomePage() {
-  const history = useHistory();
-  const sectionRef = useRef(null);
-  const { authenticated, logout } = useAuth();
-
-  function deAuthenticate(event) {
-    event.preventDefault();
-    logout();
-    history.push('/');
-  }
-
-  return (
-    <section className="homepage" ref={sectionRef}>
-      <h1>Hello stranger!</h1>
-      {authenticated ? (
-        <>
-          <h2>Good to have you back</h2>
-          <span>
-            <Link to="/" onClick={deAuthenticate}>
-              ← logout
-            </Link>
-            <span className="separator" />
-            <Link to="/secret">show me something cool →</Link>
-          </span>
-        </>
-      ) : (
-        <Link to="/login">let me in →</Link>
-      )}
-    </section>
-  );
-}
+  return(
+    <ContainerFluidMain theme={{ section: 'home' }} data-testid="homeContainer">
+      {(loadingVid) ?
+        <LoaderPage>
+          <FlexContainer>
+            <Loader></Loader>
+          </FlexContainer>
+        </LoaderPage>
+        : ''
+      }
+      {videos &&
+        <ContentSection role="row">
+          {
+            videos
+              .filter(video => video.id.kind === 'youtube#video')
+              .map((video, key) => (
+                <VideoCard
+                  key={key}
+                  title={video.snippet.title}
+                  videoId={video.id.videoId}
+                  thumb={video.snippet.thumbnails.medium.url}
+                  description={video.snippet.description}
+                  channel={video.snippet.channelTitle}
+                  publishedDate={video.snippet.publishedAt}
+                />
+              ))
+          }
+        </ContentSection>
+      }
+    </ContainerFluidMain>
+  )
+};
 
 export default HomePage;
