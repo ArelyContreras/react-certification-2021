@@ -28,8 +28,8 @@ const Login = () => {
 		setOpenDropdown(!openDropdown);
 	}
 
-	// useOnClickOutside(refButton, () => setOpenDropdown(false));
-    // useOnClickOutside(refModal, () => setOpenModal(false));
+	useOnClickOutside(refButton, () => setOpenDropdown(false));
+    useOnClickOutside(refModal, () => setOpenModal(false));
 
 	let loginDropdown;
 	let logoutDropdown;
