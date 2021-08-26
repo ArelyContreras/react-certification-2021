@@ -7,7 +7,7 @@ import Navbar from '../Navbar';
 
 function App() {
   return (
-    <div>
+    <div data-testid="app-component">
       <BrowserRouter style={{ overflow: 'hidden' }}>
         <Layout>
           <Navbar />
