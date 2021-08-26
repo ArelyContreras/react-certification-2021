@@ -1,6 +1,10 @@
-import React from "react";
+import React, { useState , useRef, useContext } from "react";
 import Icon from '@material-ui/core/Icon';
 import { ThemeProvider } from 'styled-components';
+import useForm from "../../hooks/form";
+import { useHistory, useLocation } from "react-router-dom";
+import useOnClickOutside from "../../hooks/useOnClickOutside";
+import { AppContext } from "../../providers/AppProvider";
 
 import {AppBar,
 	AppBarContainer,
@@ -13,48 +17,109 @@ import {AppBar,
 	DarkModeSwitch,
 	DarkModeInput,
 	DarkModeSlider,
-	LoginButton} from '../../components/StyledComponents/StyledComponents.component';
+	LoginButton,
+	LoginModal,
+	LoginModalContainer,
+	LoginInput,
+	LoginLabel,
+	GeneralButton,
+	CloseButton,
+	LoginDropdown,
+	FlexContainer} from '../../components/StyledComponents/StyledComponents.component';
 
 
 const Navbar = (props) => {
-	const {handleSearch} = props;
+	const ref = useRef();
+	const history = useHistory();
+    const location = useLocation();
+	const {sessionUser, setUser, unsetUser} = props;
+	const [formValues, setFormValues] = useForm({ username: '', password: ''});
+	const [openModal, setOpenModal] = useState(false);
+	const [openDropdown, setOpenDropdown] = useState(false);
+
+	const { toggleTheme, handleSearch } = useContext(AppContext);
+	const handleThemeToggle = (e) => {
+		toggleTheme();
+	};
 
 	function updateSearch(e){
 		if(e.key === 'Enter'){
-		handleSearch(e.target.value.substring(0, 20));
+			handleSearch(e.target.value.substring(0, 20));
+			if(location.pathname !== '/'){
+				history.push(`/`);
+			}
+			console.log(location.pathname !== '/')
 		}
+	}
+	function toggleModal(){
+		setOpenModal(!openModal);
+	}
+	function toggleDropdown(){
+		setOpenDropdown(!openModal);
+	}
+
+	useOnClickOutside(ref, () => setOpenDropdown(false));
+
+	let loginDropdown;
+	let logoutDropdown;
+	if (openDropdown) {
+		loginDropdown = <LoginDropdown><GeneralButton onClick={toggleModal}>Iniciar Sesion</GeneralButton></LoginDropdown>;
+		logoutDropdown = <LoginDropdown ><GeneralButton onClick={unsetUser}>Cerrar Sesion</GeneralButton></LoginDropdown>;
 	}
 
 	return (
-		<AppBar >
+		<AppBar aria-label="Header" >
 			<AppBarContainer>
 				<ThemeProvider theme={{ float: 'left' }}>
 					<AppBarContainerInside>
-						<MenuButton>
+						<MenuButton className="hamburguerMenu" aria-label='Hamburguer'>
 							<Icon>menu</Icon>
 						</MenuButton>
-						<SearchContainer>
+						<SearchContainer className="searchBar">
 							<SearchBox>
 								<Icon className="menu-search--icon">search</Icon>
-								<SearchInput type="text" onKeyDown={updateSearch} />
+								<SearchInput aria-label="Search" type="text" onKeyDown={updateSearch} />
 							</SearchBox>
 						</SearchContainer>
 					</AppBarContainerInside>
 				</ThemeProvider>
 				<ThemeProvider theme={{ float: 'right' }}>
 					<AppBarContainerInside>
-						<DarkModeButtonContainer>
+						<DarkModeButtonContainer className="switchDarkMode">
 							<DarkModeSwitch>
-								<DarkModeInput type="checkbox" />
+								<DarkModeInput onClick={handleThemeToggle} aria-label="Darkmode" type="checkbox" />
+								{/* <DarkModeInput  aria-label="Darkmode" type="checkbox" /> */}
 								<DarkModeSlider></DarkModeSlider>
 							</DarkModeSwitch>
 						</DarkModeButtonContainer>
-						<LoginButton>
+						<LoginButton className="userLogin" ref={ref} aria-label="Login" onClick={toggleDropdown}>
 							<Icon>person</Icon>
 						</LoginButton>
+						{(sessionUser) ?
+							logoutDropdown
+							:
+							loginDropdown
+						}
+						{openModal ?
+							<LoginModal>
+								<LoginModalContainer>
+									<CloseButton onClick={toggleModal}>X</CloseButton>
+									<LoginLabel htmlFor="username">Username</LoginLabel>
+									<LoginInput type="text" name="username" onChange={setFormValues}/>
+									<LoginLabel htmlFor="password">Password</LoginLabel>
+									<LoginInput type="text" name="password" onChange={setFormValues}/>
+									<FlexContainer>
+										<GeneralButton onClick={toggleModal}>Cancel</GeneralButton>
+										<GeneralButton onClick={() => setUser(formValues.username, formValues.password)}>Login</GeneralButton>
+									</FlexContainer>
+								</LoginModalContainer>
+							</LoginModal>
+							: ''
+						}
 					</AppBarContainerInside>
 				</ThemeProvider>
 			</AppBarContainer>
+
 		</AppBar>
   	);
 }

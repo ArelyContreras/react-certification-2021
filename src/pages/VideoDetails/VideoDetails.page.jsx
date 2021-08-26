@@ -2,7 +2,7 @@ import React from 'react';
 import { useParams } from "react-router-dom";
 import {
 	ContainerFluidMain,
-	ContentSection,
+	ContentSectionReproductor,
 	VideoDetailRelatedList } from '../../components/StyledComponents/StyledComponents.component';
 
 import VideoReproductor from '../../components/VideoReproductor';
@@ -26,7 +26,7 @@ const VideoDetailsPage = (props) => {
     return(
         <ContainerFluidMain>
 
-                <ContentSection>
+                <ContentSectionReproductor>
                 {videoDetails &&
                     <VideoReproductor
                         title={videoDetails.snippet.title}
@@ -55,7 +55,7 @@ const VideoDetailsPage = (props) => {
                         </VideoDetailRelatedList>
                     }
 
-                </ContentSection>
+                </ContentSectionReproductor>
 
         </ContainerFluidMain>
 

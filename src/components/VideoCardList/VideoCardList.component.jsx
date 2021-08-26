@@ -22,7 +22,7 @@ const VideoCardList = (props) => {
     }
 
     return (
-      <VideoListedItem>
+      <VideoListedItem className="card">
         <VideoListedItemButton onClick={((e) => selectVideo(e, videoId))}>
           <VideoListedImgCont>
             <VideoCardImg  src={thumb} alt={title} title={title} />

@@ -22,7 +22,7 @@ const VideoCard = (props) => {
 	}
 
   return (
-    <VideoCardItem data-testid="video-card-item">
+    <VideoCardItem className="card" role="gridcell">
       <VideoCardItemButton onClick={((e) => selectVideo(e, videoId))}>
         <VideoCardImgCont>
           <VideoCardImg data-testid="video-card-item--img" src={thumb} alt={title} title={title} />

@@ -10,36 +10,27 @@ beforeEach(() => {
 
 describe('<App />', () => {
 
-    test('App works', () => {
-        const appComponent = screen.getByTestId('app-component');
-        const titleSection = screen.getByTestId('page-name');
+    test('App - App Works & Load View', () => {
+        //test both views
+        const homeSection = screen.getByRole('heading');
 
-        expect(appComponent).toBeInTheDocument();
-        expect(titleSection).toHaveTextContent('Welcome to the Challenge!');
-        expect(titleSection).not.toHaveTextContent('welcome to the challenge');
+        expect(homeSection).toHaveTextContent('Challenge');
+        expect(homeSection).not.toHaveTextContent('challenge');
     });
 
-    test('Load Navbar', () => {
-        const Navbar = screen.getByTestId('navbar-component');
+    test('App - Load Navbar', () => {
+        const Navbar = screen.getByRole('navigation');
 
         expect(Navbar).toBeInTheDocument();
     });
-    
-    test('Navbar Items', () => {
-        const Navbar = screen.getByTestId('navbar-component');
 
-        expect(Navbar).toContainElement(screen.getByTestId('navbar--hamburguer'));
-        expect(Navbar).toContainElement(screen.getByTestId('navbar--search'));
-        expect(Navbar).toContainElement(screen.getByTestId('navbar--darkmode'));
-        expect(Navbar).toContainElement(screen.getByTestId('navbar--login'));
+    test('App - Navbar Items', () => {
+        const Navbar = screen.getByRole('navigation');
+
+        expect(Navbar).toContainElement(screen.getByRole('button', {name: 'Hamburguer'}));
+        expect(Navbar).toContainElement(screen.getByRole('textbox', {name: 'Search'}));
+        expect(Navbar).toContainElement(screen.getByRole('checkbox', {name: 'Darkmode'}));
+        expect(Navbar).toContainElement(screen.getByRole('button', {name: 'Login'}));
     });
-
-    test('Load Home', () => {
-        const homeSection = screen.getByTestId('home-view');
-
-        expect(homeSection).toBeInTheDocument();
-    });
-
-
 
 })
